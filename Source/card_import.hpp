@@ -1,3 +1,6 @@
+#ifndef CARD_IMPORT_HPP_INCLUDED
+#define CARD_IMPORT_HPP_INCLUDED
+
 /*
   ==============================================================================
 
@@ -7,9 +10,6 @@
 
   ==============================================================================
 */
-
-#ifndef CARD_IMPORT_HPP_INCLUDED
-#define CARD_IMPORT_HPP_INCLUDED
 
 #include <vector>
 

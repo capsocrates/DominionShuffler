@@ -1,3 +1,6 @@
+#ifndef RANDOMIZER_CARD_HPP_INCLUDED
+#define RANDOMIZER_CARD_HPP_INCLUDED
+
 /*
   ==============================================================================
 
@@ -8,9 +11,6 @@
 
   ==============================================================================
 */
-
-#ifndef RANDOMIZER_CARD_HPP_INCLUDED
-#define RANDOMIZER_CARD_HPP_INCLUDED
 
 #include "cardsets.hpp"
 #include "cardtypes.hpp"

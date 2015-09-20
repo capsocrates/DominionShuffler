@@ -1,3 +1,6 @@
+#ifndef TEST_RUNNER_HPP_INCLUDED
+#define TEST_RUNNER_HPP_INCLUDED
+
 /*
   ==============================================================================
 
@@ -7,9 +10,6 @@
 
   ==============================================================================
 */
-
-#ifndef TEST_RUNNER_HPP_INCLUDED
-#define TEST_RUNNER_HPP_INCLUDED
 
 /*
 #include "../JuceLibraryCode/juce_UnitTest.h"

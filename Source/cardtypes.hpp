@@ -1,3 +1,6 @@
+#ifndef CARDTYPES_HPP_INCLUDED
+#define CARDTYPES_HPP_INCLUDED
+
 /*
   ==============================================================================
 
@@ -7,9 +10,6 @@
 
   ==============================================================================
 */
-
-#ifndef CARDTYPES_HPP_INCLUDED
-#define CARDTYPES_HPP_INCLUDED
 
 namespace SM	//(sudden magic)
 {
