@@ -12,7 +12,7 @@
 
 #include "card_import.hpp"
 
-#include "D:\\SuddenMagic\\lib\\fold_subranges.hpp"
+#include <sm\group_by.hpp>
 
 #include <algorithm>
 #include <array>
@@ -77,7 +77,11 @@ std::vector<randomizer_card> make_cards_from_strings(const as& in)
     //iterate over the subranges, creating cards from each subrange
 
     std::vector<randomizer_card> return_vec;
-    fold_subranges(find_next_token(std::begin(in), std::end(in)), std::end(in), std::back_inserter(return_vec), make_range);
+    group_by(find_next_token(std::begin(in), 
+                             std::end(in)), 
+             std::end(in), 
+             std::back_inserter(return_vec), 
+             make_range);
 
     //return the created cards in a vector
     return return_vec;

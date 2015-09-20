@@ -10,7 +10,7 @@
 
 #include "randomizer_card.hpp"
 
-#include "D:\\SuddenMagic\\lib\\fold_subranges.hpp"
+#include <sm\group_by.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -139,14 +139,14 @@ auto types(vsi b, vsi e)
 
     std::vector<cardtypes> return_vec;
 
-    fold_subranges(sb
-                   , se
-                   , std::back_inserter(return_vec)
-                   , [find_comma_or_bracket](ssi b, ssi e)
+    group_by(sb
+             , se
+             , std::back_inserter(return_vec)
+             , [find_comma_or_bracket](ssi b, ssi e)
     {
         return std::make_pair(b, find_comma_or_bracket(b, e));
     }
-                   , [find_comma_or_bracket](ssi b, ssi e)
+             , [find_comma_or_bracket](ssi b, ssi e)
     {
         return cardtype_from_str(s{std::next(b), find_comma_or_bracket(b, e)});
     });
