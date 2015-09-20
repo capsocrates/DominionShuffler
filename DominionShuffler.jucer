@@ -39,19 +39,19 @@
                        isDebug="0" optimisation="3" targetName="DominionShuffler" cppLanguageStandard="c++14"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\tools\JUCE\modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <XCODE_IPHONE targetFolder="Builds/iOS">
@@ -62,44 +62,44 @@
                        targetName="DominionShuffler" cppLanguageStandard="c++14"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\tools\JUCE\modules"/>
       </MODULEPATHS>
     </XCODE_IPHONE>
     <VS2015 targetFolder="Builds/VisualStudio2015">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="DominionShuffler" warningsAreErrors="0"
-                       characterSet="Unicode"/>
+                       characterSet="Unicode" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="DominionShuffler" warningsAreErrors="0"
-                       characterSet="Unicode"/>
+                       characterSet="Unicode" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\tools\JUCE\modules"/>
       </MODULEPATHS>
     </VS2015>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
@@ -110,19 +110,19 @@
                        targetName="DominionShuffler"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\tools\JUCE\modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <ANDROID targetFolder="Builds/Android" androidVersionCode="1" androidActivityClass="com.suddenmagic.dominionshuffler.DominionShuffler"
@@ -132,24 +132,24 @@
              androidKeyAliasPass="android" androidCpp11="1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a" isDebug="1"
-                       optimisation="1" targetName="DominionShuffler"/>
+                       optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
         <CONFIGURATION name="Release" androidArchitectures="armeabi armeabi-v7a" isDebug="0"
-                       optimisation="3" targetName="DominionShuffler"/>
+                       optimisation="3" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\tools\JUCE\modules"/>
       </MODULEPATHS>
     </ANDROID>
   </EXPORTFORMATS>
