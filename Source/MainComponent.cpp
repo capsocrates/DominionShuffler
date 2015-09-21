@@ -13,14 +13,15 @@
 #include "RandomizerCard.hpp"
 
 #include <boost/range/algorithm/transform.hpp>
+#include <boost/range/irange.hpp>
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
     : cards(SM::Dominion::read_cards())
-    , cardDisplayModel()
+    , cardDisplayModel(10)
     , cardDisplay(new juce::ListBox("cardDisplay", &cardDisplayModel))
     , shuffleButtonClicked(*this)
-    , shuffleButton(new juce::TextButton(L"shuffleButton", L"Shuffle the cards and display them."))
+    , shuffleButton(new juce::TextButton(L"Shuffle", L"Shuffle the cards and display them."))
 {
     setSize(250, 350);
 
@@ -28,7 +29,9 @@ MainContentComponent::MainContentComponent()
     cardDisplay->centreWithSize(getWidth(), 220);
 
     addAndMakeVisible(*shuffleButton.get());
-    shuffleButton->setTopLeftPosition(5, cardDisplay->getBottom() + 5);
+    shuffleButton->changeWidthToFitText(35);
+    shuffleButton->centreWithSize(shuffleButton->getWidth(), shuffleButton->getHeight());
+    shuffleButton->setTopLeftPosition(shuffleButton->getX(), cardDisplay->getBottom() + 5);
 
     shuffleButton->addListener(&shuffleButtonClicked);
 
@@ -57,10 +60,11 @@ void MainContentComponent::resized()
 void MainContentComponent::shuffle()
 {
     boost::transform(shuf.shuffle(cards, 10),
-                     cardDisplayModel.back_inserter(),
+                     begin(cardDisplayModel),
                      [](const SM::Dominion::RandomizerCard& in) -> std::wstring
     {
         return in.name;
     });
     cardDisplay->updateContent();
+    cardDisplay->repaint();
 }
