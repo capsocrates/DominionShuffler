@@ -6,16 +6,15 @@
   ==============================================================================
 */
 
+#include "MainComponent.h"
+
 #include "card_import.hpp"
 #include "randomizer_card.hpp"
 
-#include "StringListBoxModel.hpp"
-
-#include "MainComponent.h"
-
 //==============================================================================
 MainContentComponent::MainContentComponent()
-    : cardDisplay(new juce::ListBox("cardDisplay", new SM::StringListBoxModel()))
+    : cardDisplayModel()
+    , cardDisplay(new juce::ListBox("cardDisplay", &cardDisplayModel))
 {
     setSize(600, 400);
 

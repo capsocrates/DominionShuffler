@@ -9,6 +9,8 @@
   ==============================================================================
 */
 
+#include "sm\StringListBoxModel.hpp"
+
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include <memory>
@@ -29,6 +31,7 @@ public:
     void resized();
 
 private:
+    SM::StringListBoxModel cardDisplayModel;
     std::unique_ptr<juce::ListBox> cardDisplay;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainContentComponent)

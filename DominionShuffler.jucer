@@ -5,6 +5,12 @@
               jucerVersion="3.2.0" companyName="SuddenMagic" companyEmail="joseph.michael.chadwick@gmail.com"
               defines="DONT_SET_USING_JUCE_NAMESPACE=1">
   <MAINGROUP id="hW9wfb" name="DominionShuffler">
+    <GROUP id="{EDF4E494-DA76-89AD-941C-07CAF290E6AD}" name="UncompiledExternalLibs">
+      <FILE id="djjyd7" name="StringListBoxModel.cpp" compile="1" resource="0"
+            file="../../libs/SuddenMagic/sm/StringListBoxModel.cpp"/>
+      <FILE id="RbBFjj" name="StringListBoxModel.hpp" compile="0" resource="0"
+            file="../../libs/SuddenMagic/sm/StringListBoxModel.hpp"/>
+    </GROUP>
     <GROUP id="{AE596F0F-591D-9CEB-65FB-5E281AEEF9BA}" name="CompiledData">
       <FILE id="KGjWQh" name="card_text.cpp" compile="1" resource="0" file="Source/card_text.cpp"/>
       <FILE id="aGSYWY" name="card_text.hpp" compile="0" resource="0" file="Source/card_text.hpp"/>
