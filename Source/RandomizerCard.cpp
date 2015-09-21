@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "randomizer_card.hpp"
+#include "RandomizerCard.hpp"
 
 #include <sm\group_by.hpp>
 
@@ -22,7 +22,7 @@ using vsi = std::vector<s>::const_iterator;
 
 namespace SM	//(sudden magic)
 {
-namespace dominion  //for all of the code related specifically to the deck-building game Dominion.
+namespace Dominion  //for all of the code related specifically to the deck-building game Dominion.
 {
 
 s read_after(const s& start_key, const s& end_key, vsi b, vsi e, const s& delim = {L" "})
@@ -38,69 +38,69 @@ auto get_cardset(vsi b, vsi e)
 {
     const s cardset{*std::next(std::find(b, e, L"cardset:"))};
     if (cardset == L"alchemy")
-        return cardsets::alchemy;
+        return Cardsets::alchemy;
     else if (cardset == L"base")
-        return cardsets::base;
+        return Cardsets::base;
     else if (cardset == L"cornucopia")
-        return cardsets::cornucopia;
+        return Cardsets::cornucopia;
     else if (cardset == L"dark")
-        return cardsets::dark_ages;
+        return Cardsets::dark_ages;
     else if (cardset == L"dominion")
-        return cardsets::dominion;
+        return Cardsets::dominion;
     else if (cardset == L"guilds")
-        return cardsets::guilds;
+        return Cardsets::guilds;
     else if (cardset == L"hinterlands")
-        return cardsets::hinterlands;
+        return Cardsets::hinterlands;
     else if (cardset == L"intrigue")
-        return cardsets::intrigue;
+        return Cardsets::intrigue;
     else if (cardset == L"promo")
-        return cardsets::promo;
+        return Cardsets::promo;
     else if (cardset == L"prosperity")
-        return cardsets::prosperity;
+        return Cardsets::prosperity;
     else if (cardset == L"seaside")
-        return cardsets::seaside;
+        return Cardsets::seaside;
     else
         assert(!"reached invalid if statement in string to cardset conversion");
 
-    return cardsets::base;
+    return Cardsets::base;
 }
 
 auto cardtype_from_str(const std::wstring& in)
 {
     if (in == L"Action")
-        return cardtypes::action;
+        return Cardtypes::action;
     else if (in == L"Attack")
-        return cardtypes::attack;
+        return Cardtypes::attack;
     else if (in == L"Blank")
-        return cardtypes::blank;
+        return Cardtypes::blank;
     else if (in == L"Curse")
-        return cardtypes::curse;
+        return Cardtypes::curse;
     else if (in == L"Duration")
-        return cardtypes::duration;
+        return Cardtypes::duration;
     else if (in == L"Event")
-        return cardtypes::event;
+        return Cardtypes::event;
     else if (in == L"Looter")
-        return cardtypes::looter;
+        return Cardtypes::looter;
     else if (in == L"Prize")
-        return cardtypes::prize;
+        return Cardtypes::prize;
     else if (in == L"Reaction")
-        return cardtypes::reaction;
+        return Cardtypes::reaction;
     else if (in == L"Reserve")
-        return cardtypes::reserve;
+        return Cardtypes::reserve;
     else if (in == L"Ruins")
-        return cardtypes::ruins;
+        return Cardtypes::ruins;
     else if (in == L"Shelter")
-        return cardtypes::shelter;
+        return Cardtypes::shelter;
     else if (in == L"Traveler")
-        return cardtypes::traveler;
+        return Cardtypes::traveler;
     else if (in == L"Treasure")
-        return cardtypes::treasure;
+        return Cardtypes::treasure;
     else if (in == L"Victory")
-        return cardtypes::victory;
+        return Cardtypes::victory;
     else
         assert(!"reached invalid if statement in string to cardset conversion");
 
-    return cardtypes::action;
+    return Cardtypes::action;
 }
 
 auto types(vsi b, vsi e)
@@ -137,7 +137,7 @@ auto types(vsi b, vsi e)
         return std::find_if(std::next(b), e, comma_or_bracket);
     };
 
-    std::vector<cardtypes> return_vec;
+    std::vector<Cardtypes> return_vec;
 
     group_by(sb
              , se
@@ -154,11 +154,11 @@ auto types(vsi b, vsi e)
     return return_vec;
 }
 
-randomizer_card::randomizer_card(const std::vector<std::wstring>& in)
-    : randomizer_card(std::begin(in), std::end(in))
+RandomizerCard::RandomizerCard(const std::vector<std::wstring>& in)
+    : RandomizerCard(std::begin(in), std::end(in))
 {}
 
-randomizer_card::randomizer_card(const vsi b, const vsi e)
+RandomizerCard::RandomizerCard(const vsi b, const vsi e)
     : set(get_cardset(b, e))
     , name(read_after(L"name:", L"potcost:", b, e))
     , gold_cost(std::stoi(read_after(L"cost:", L"description:", b, e, {L""})))
@@ -168,5 +168,5 @@ randomizer_card::randomizer_card(const vsi b, const vsi e)
     , applicable_types(types(b, e))
 {}
 
-}	//end namespace dominion
+}	//end namespace Dominion
 }	//end namespace SM (sudden magic)

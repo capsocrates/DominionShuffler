@@ -4,7 +4,7 @@
 /*
   ==============================================================================
 
-    test_runner.hpp
+    TestRunner.hpp
     Created: 14 Sep 2015 2:28:25pm
     Author:  Bladerunner
 
@@ -14,9 +14,12 @@
 /*
 #include "../JuceLibraryCode/juce_UnitTest.h"
 
-class unit_test_runner : public juce::UnitTestRunner
+namespace SM
+{
+class UnitTestRunner : public juce::UnitTestRunner
 {
 };
+}   //end namespace SM
 */
 
 #endif  // TEST_RUNNER_HPP_INCLUDED

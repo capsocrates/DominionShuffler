@@ -8,8 +8,8 @@
 
 #include "MainComponent.h"
 
-#include "card_import.hpp"
-#include "randomizer_card.hpp"
+#include "CardImport.hpp"
+#include "RandomizerCard.hpp"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -18,7 +18,7 @@ MainContentComponent::MainContentComponent()
 {
     setSize(600, 400);
 
-    auto cards = SM::dominion::read_cards();
+    auto cards = SM::Dominion::read_cards();
 }
 
 MainContentComponent::~MainContentComponent()

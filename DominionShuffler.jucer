@@ -12,22 +12,26 @@
             file="../../libs/SuddenMagic/sm/StringListBoxModel.hpp"/>
     </GROUP>
     <GROUP id="{AE596F0F-591D-9CEB-65FB-5E281AEEF9BA}" name="CompiledData">
-      <FILE id="KGjWQh" name="card_text.cpp" compile="1" resource="0" file="Source/card_text.cpp"/>
-      <FILE id="aGSYWY" name="card_text.hpp" compile="0" resource="0" file="Source/card_text.hpp"/>
+      <FILE id="KGjWQh" name="CardText.cpp" compile="1" resource="0" file="Source/CardText.cpp"/>
+      <FILE id="aGSYWY" name="CardText.hpp" compile="0" resource="0" file="Source/CardText.hpp"/>
     </GROUP>
     <GROUP id="{CE76087F-7E2C-D2D5-AA5B-F36BC98F95DE}" name="Tests">
-      <FILE id="DkPWGs" name="test_runner.cpp" compile="1" resource="0" file="Source/Tests/test_runner.cpp"/>
-      <FILE id="DDi8AP" name="test_runner.hpp" compile="0" resource="0" file="Source/Tests/test_runner.hpp"/>
+      <FILE id="DkPWGs" name="TestRunner.cpp" compile="1" resource="0" file="Source/Tests/TestRunner.cpp"/>
+      <FILE id="DDi8AP" name="TestRunner.hpp" compile="0" resource="0" file="Source/Tests/TestRunner.hpp"/>
     </GROUP>
     <GROUP id="{56EB8080-E18D-A714-3ACE-2812849EFD6E}" name="Source">
-      <FILE id="S9O5n1" name="cardtypes.hpp" compile="0" resource="0" file="Source/cardtypes.hpp"/>
-      <FILE id="Zb1JZV" name="cardsets.hpp" compile="0" resource="0" file="Source/cardsets.hpp"/>
-      <FILE id="wnPhuB" name="card_import.cpp" compile="1" resource="0" file="Source/card_import.cpp"/>
-      <FILE id="d2NkB9" name="card_import.hpp" compile="0" resource="0" file="Source/card_import.hpp"/>
-      <FILE id="l7ZR25" name="randomizer_card.cpp" compile="1" resource="0"
-            file="Source/randomizer_card.cpp"/>
-      <FILE id="VJlK0U" name="randomizer_card.hpp" compile="0" resource="0"
-            file="Source/randomizer_card.hpp"/>
+      <FILE id="IfNILj" name="CardShuffler.cpp" compile="1" resource="0"
+            file="Source/CardShuffler.cpp"/>
+      <FILE id="QapFfh" name="CardShuffler.hpp" compile="0" resource="0"
+            file="Source/CardShuffler.hpp"/>
+      <FILE id="S9O5n1" name="Cardtypes.hpp" compile="0" resource="0" file="Source/Cardtypes.hpp"/>
+      <FILE id="Zb1JZV" name="Cardsets.hpp" compile="0" resource="0" file="Source/Cardsets.hpp"/>
+      <FILE id="wnPhuB" name="CardImport.cpp" compile="1" resource="0" file="Source/CardImport.cpp"/>
+      <FILE id="d2NkB9" name="CardImport.hpp" compile="0" resource="0" file="Source/CardImport.hpp"/>
+      <FILE id="l7ZR25" name="RandomizerCard.cpp" compile="1" resource="0"
+            file="Source/RandomizerCard.cpp"/>
+      <FILE id="VJlK0U" name="RandomizerCard.hpp" compile="0" resource="0"
+            file="Source/RandomizerCard.hpp"/>
       <FILE id="r1JIwl" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="FzK7FG" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>

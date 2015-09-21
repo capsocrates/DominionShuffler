@@ -8,9 +8,9 @@
   ==============================================================================
 */
 
-#include "randomizer_card.hpp"
+#include "RandomizerCard.hpp"
 
-#include "card_import.hpp"
+#include "CardImport.hpp"
 
 #include <sm\group_by.hpp>
 
@@ -21,27 +21,27 @@
 #include <sstream>
 #include <iterator>
 
-#include "card_text.hpp"    //all of the card text stored in a global string...
+#include "CardText.hpp"    //all of the card text stored in a global string...
 
 using s = std::wstring;  //std::wstring
 using isi = std::istream_iterator<std::wstring, wchar_t>;   //std::istream_iterator<std::wstring>
-using as = SM::dominion::card_text_array;  //std::array<std::wstring>
+using as = SM::Dominion::CardTextArray;  //std::array<std::wstring>
 
 namespace SM	//(sudden magic)
 {
-namespace dominion  //for all of the code related specifically to the deck-building game Dominion.
+namespace Dominion  //for all of the code related specifically to the deck-building game Dominion.
 {
 
-std::vector<randomizer_card> make_cards_from_strings(const as& in);
+std::vector<RandomizerCard> make_cards_from_strings(const as& in);
 
-std::vector<randomizer_card> read_cards()
+std::vector<RandomizerCard> read_cards()
 {
     return make_cards_from_strings(complete_card_text);
 }
 
-std::vector<randomizer_card> make_cards_from_strings(const as& in)
+std::vector<RandomizerCard> make_cards_from_strings(const as& in)
 {
-    using vrc = std::vector<randomizer_card>;
+    using vrc = std::vector<RandomizerCard>;
     if (in.empty())
         return vrc();
 
@@ -76,7 +76,7 @@ std::vector<randomizer_card> make_cards_from_strings(const as& in)
     };
     //iterate over the subranges, creating cards from each subrange
 
-    std::vector<randomizer_card> return_vec;
+    std::vector<RandomizerCard> return_vec;
     group_by(find_next_token(std::begin(in), 
                              std::end(in)), 
              std::end(in), 
@@ -87,5 +87,5 @@ std::vector<randomizer_card> make_cards_from_strings(const as& in)
     return return_vec;
 }
 
-}	//end namespace dominion
+}	//end namespace Dominion
 }	//end namespace SM (sudden magic)

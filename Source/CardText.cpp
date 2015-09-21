@@ -1,7 +1,7 @@
-#include "card_text.hpp"
+#include "CardText.hpp"
 
-namespace SM { namespace dominion {
-extern card_text_array complete_card_text =
+namespace SM { namespace Dominion {
+extern CardTextArray complete_card_text =
 { {
 {L"-"}, {L"!!python/object:__main__.Card"}
 , {L"cardset:"}, {L"alchemy"}

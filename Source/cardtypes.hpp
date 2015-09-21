@@ -13,10 +13,10 @@
 
 namespace SM	//(sudden magic)
 {
-namespace dominion  //for all of the code related specifically to the deck-building game Dominion.
+namespace Dominion  //for all of the code related specifically to the deck-building game Dominion.
 {
 //An enumeration of all possible card types in the deck-building game Dominion at the time of this compilation.
-enum class cardtypes
+enum class Cardtypes
 {
     action
     , attack
@@ -33,8 +33,8 @@ enum class cardtypes
     , traveler
     , treasure
     , victory
-};  //end enum class cardtypes
-}	//end namespace dominion
+};  //end enum class Cardtypes
+}	//end namespace Dominion
 }	//end namespace SM (sudden magic)
 
 #endif  // CARDTYPES_HPP_INCLUDED
