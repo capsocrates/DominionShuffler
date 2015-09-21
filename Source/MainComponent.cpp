@@ -9,16 +9,30 @@
 #include "MainComponent.h"
 
 #include "CardImport.hpp"
+#include "CardShuffler.hpp"
 #include "RandomizerCard.hpp"
+
+#include <boost/range/algorithm/transform.hpp>
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
-    : cardDisplayModel()
+    : cards(SM::Dominion::read_cards())
+    , cardDisplayModel()
     , cardDisplay(new juce::ListBox("cardDisplay", &cardDisplayModel))
+    , shuffleButtonClicked(*this)
+    , shuffleButton(new juce::TextButton(L"shuffleButton", L"Shuffle the cards and display them."))
 {
-    setSize(600, 400);
+    setSize(250, 350);
 
-    auto cards = SM::Dominion::read_cards();
+    addAndMakeVisible(*cardDisplay.get());
+    cardDisplay->centreWithSize(getWidth(), 220);
+
+    addAndMakeVisible(*shuffleButton.get());
+    shuffleButton->setTopLeftPosition(5, cardDisplay->getBottom() + 5);
+
+    shuffleButton->addListener(&shuffleButtonClicked);
+
+    shuffle();
 }
 
 MainContentComponent::~MainContentComponent()
@@ -38,4 +52,15 @@ void MainContentComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
+}
+
+void MainContentComponent::shuffle()
+{
+    boost::transform(shuf.shuffle(cards, 10),
+                     cardDisplayModel.back_inserter(),
+                     [](const SM::Dominion::RandomizerCard& in) -> std::wstring
+    {
+        return in.name;
+    });
+    cardDisplay->updateContent();
 }

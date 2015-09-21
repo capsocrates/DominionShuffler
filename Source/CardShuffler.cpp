@@ -9,3 +9,15 @@
 */
 
 #include "CardShuffler.hpp"
+
+namespace SM
+{
+namespace Dominion
+{
+CardShuffler::CardShuffler()
+    : generator(engine())
+{
+}
+
+}   //end namespace Dominion
+}   //end namespace SM

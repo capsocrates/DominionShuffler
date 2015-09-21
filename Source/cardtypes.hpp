@@ -4,7 +4,7 @@
 /*
   ==============================================================================
 
-    cardtypes.hpp
+    Cardtypes.hpp
     Created: 14 Sep 2015 2:09:25pm
     Author:  Bladerunner
 
