@@ -41,11 +41,11 @@ public:
 
     //take iterators from other containers (like std::array)
     template<typename ContainerItr>
-    RandomizerCard(const typename ContainerItr b, const typename ContainerItr e)
+    RandomizerCard(const ContainerItr b, const ContainerItr e)
         : RandomizerCard(std::vector<std::wstring>{b, e})
     {};
 
-    RandomizerCard(const std::vector<std::wstring>& i);
+    explicit RandomizerCard(const std::vector<std::wstring>&);
     RandomizerCard(const std::vector<std::wstring>::const_iterator, const std::vector<std::wstring>::const_iterator);
 };	//end class RandomizerCard
 }	//end namespace Dominion

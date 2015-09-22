@@ -8,7 +8,9 @@
   ==============================================================================
 */
 
+#pragma warning(push, 0)
 #include "../JuceLibraryCode/JuceHeader.h"
+#pragma warning(pop)
 #include "MainComponent.h"
 
 
@@ -61,9 +63,9 @@ public:
     class MainWindow : public juce::DocumentWindow
     {
     public:
-        MainWindow(juce::String name) : juce::DocumentWindow(name,
-                                                             juce::Colours::lightgrey,
-                                                             juce::DocumentWindow::allButtons)
+        explicit MainWindow(juce::String name) : juce::DocumentWindow(name,
+                                                                      juce::Colours::lightgrey,
+                                                                      juce::DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar(true);
             setContentOwned(new MainContentComponent(), true);

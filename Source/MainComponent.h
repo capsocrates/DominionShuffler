@@ -13,7 +13,9 @@
 
 #include "sm\StringListBoxModel.hpp"
 
+#pragma warning(push, 0)
 #include "../JuceLibraryCode/JuceHeader.h"
+#pragma warning(pop)
 
 #include <memory>
 
@@ -47,7 +49,7 @@ private:
     private:
         MainContentComponent& main;
     public:
-        shuffleListener(MainContentComponent& main) : juce::TextButton::Listener(), main(main) {};
+        explicit shuffleListener(MainContentComponent& main) : juce::TextButton::Listener(), main(main) {};
         void buttonClicked(juce::Button* /*btn*/) override
         {
             main.shuffle();
