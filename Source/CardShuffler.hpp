@@ -82,10 +82,10 @@ public:
         };
 
         using namespace boost::adaptors;
-        auto all_filters = [&one_filter](const RandomizerCard& card, const auto& filters) -> bool
+        auto all_filters = [&one_filter](const RandomizerCard& card, const vec_filterT& all_filters) -> bool
         {
             auto bind_one_filter = std::bind(one_filter, _1, std::ref(card));
-            return boost::find_if(filters | indirected, bind_one_filter) == boost::end(filters | indirected);
+            return boost::find_if(all_filters | indirected, bind_one_filter) == boost::end(all_filters | indirected);
         };
 
         auto bind_all_filters = std::bind(all_filters, _1, std::ref(filters));

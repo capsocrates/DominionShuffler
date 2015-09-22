@@ -9,17 +9,13 @@
   ==============================================================================
 */
 
-#include "CardShuffler.hpp"
-
-#include "sm\StringListBoxModel.hpp"
+#include "CardShuffleDisplay.hpp"
 
 #pragma warning(push, 0)
 #include "../JuceLibraryCode/JuceHeader.h"
 #pragma warning(pop)
 
-#include <memory>
-
-namespace SM { namespace Dominion { class RandomizerCard; } }
+#include <vector>
 
 //==============================================================================
 /*
@@ -33,30 +29,13 @@ public:
     MainContentComponent();
     ~MainContentComponent();
 
-    void paint(juce::Graphics&);
+    void paint(juce::Graphics&) const;
     void resized();
 
 private:
-    void shuffle();
+    juce::TabbedComponent tabs;
+    CardShuffleDisplay cardDisplay;
 
-    SM::Dominion::CardShuffler shuf;
-    std::vector<SM::Dominion::RandomizerCard> cards;
-
-    SM::StringListBoxModel cardDisplayModel;
-    std::unique_ptr<juce::ListBox> cardDisplay;
-    class shuffleListener : public juce::TextButton::Listener 
-    {
-    private:
-        MainContentComponent& main;
-    public:
-        explicit shuffleListener(MainContentComponent& main) : juce::TextButton::Listener(), main(main) {};
-        void buttonClicked(juce::Button* /*btn*/) override
-        {
-            main.shuffle();
-        }
-    };
-    shuffleListener shuffleButtonClicked;
-    std::unique_ptr<juce::TextButton> shuffleButton;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainContentComponent)
 };

@@ -20,6 +20,20 @@
       <FILE id="DDi8AP" name="TestRunner.hpp" compile="0" resource="0" file="Source/Tests/TestRunner.hpp"/>
     </GROUP>
     <GROUP id="{56EB8080-E18D-A714-3ACE-2812849EFD6E}" name="Source">
+      <GROUP id="{489BDC96-C21F-3614-2F81-8219FF9522F0}" name="Components">
+        <FILE id="TG4cTW" name="CardtypeToggle.cpp" compile="1" resource="0"
+              file="Source/CardtypeToggle.cpp"/>
+        <FILE id="UJ2yEQ" name="CardtypeToggle.hpp" compile="0" resource="0"
+              file="Source/CardtypeToggle.hpp"/>
+        <FILE id="EL3m5T" name="CardShuffleDisplay.cpp" compile="1" resource="0"
+              file="Source/CardShuffleDisplay.cpp"/>
+        <FILE id="W7swIc" name="CardShuffleDisplay.hpp" compile="0" resource="0"
+              file="Source/CardShuffleDisplay.hpp"/>
+        <FILE id="CHKsgE" name="CardsetToggle.cpp" compile="1" resource="0"
+              file="Source/CardsetToggle.cpp"/>
+        <FILE id="QQmflX" name="CardsetToggle.hpp" compile="0" resource="0"
+              file="Source/CardsetToggle.hpp"/>
+      </GROUP>
       <FILE id="IfNILj" name="CardShuffler.cpp" compile="1" resource="0"
             file="Source/CardShuffler.cpp"/>
       <FILE id="QapFfh" name="CardShuffler.hpp" compile="0" resource="0"
@@ -137,7 +151,7 @@
              androidSDKPath="" androidNDKPath="" androidMinimumSDK="21" androidInternetNeeded="0"
              androidKeyStore="${user.home}/.android/debug.keystore" androidKeyStorePass="android"
              androidKeyAlias="androiddebugkey" androidKeyAliasPass="android"
-             androidCpp11="1" extraCompilerFlags="-std=c++11">
+             androidCpp11="0" extraCompilerFlags="-std=c++14" extraDefs="MOBILE_DEVICE_IS_BEING_COMPILED=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a" isDebug="1"
                        optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic;D:\dev\tools\JUCE\modules\juce_graphics;D:\dev\tools\JUCE\modules\juce_data_structures"/>
