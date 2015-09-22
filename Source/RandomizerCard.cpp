@@ -10,12 +10,14 @@
 
 #include "RandomizerCard.hpp"
 
-#include <sm\group_by.hpp>
+#include "sm\group_by.hpp"
 
 #include <algorithm>
 #include <cassert>
+#include <cwchar>   //for std::wcstoll, since std::stoi doesn't seem to be available on the Android C++ compiler
 #include <iterator>
 #include <numeric>
+#include <string>
 
 using s = std::wstring;  //std::wstring
 using vsi = std::vector<s>::const_iterator;
@@ -34,7 +36,7 @@ s read_after(const s& start_key, const s& end_key, vsi b, vsi e, const s& delim 
     });
 }
 
-auto get_cardset(vsi b, vsi e)
+auto get_cardset(vsi b, vsi e) -> Cardsets
 {
     const s cardset{*std::next(std::find(b, e, L"cardset:"))};
     if (cardset == L"alchemy")
@@ -65,7 +67,7 @@ auto get_cardset(vsi b, vsi e)
     return Cardsets::base;
 }
 
-auto cardtype_from_str(const std::wstring& in)
+auto cardtype_from_str(const std::wstring& in) -> Cardtypes
 {
     if (in == L"Action")
         return Cardtypes::action;
@@ -103,7 +105,7 @@ auto cardtype_from_str(const std::wstring& in)
     return Cardtypes::action;
 }
 
-auto types(vsi b, vsi e)
+auto types(vsi b, vsi e) -> std::vector<Cardtypes>
 {
     //this should be something like "[Action]" or "[Action, Attack]"
     const s bracket_tuple{read_after(L"!!python/tuple", L"-", b, e, {L""})};
@@ -161,8 +163,8 @@ RandomizerCard::RandomizerCard(const std::vector<std::wstring>& in)
 RandomizerCard::RandomizerCard(const vsi b, const vsi e)
     : set(get_cardset(b, e))
     , name(read_after(L"name:", L"potcost:", b, e))
-    , gold_cost(std::stoi(read_after(L"cost:", L"description:", b, e, {L""})))
-    , potion_cost(std::stoi(read_after(L"potcost:", L"types:", b, e, {L""})))
+    , gold_cost(static_cast<int>(std::wcstol(read_after(L"cost:", L"description:", b, e, {L""}).c_str(), nullptr,10)))   //stoi(read_after(L"cost:", L"description:", b, e, {L""})))
+    , potion_cost(static_cast<int>(std::wcstol(read_after(L"potcost:", L"types:", b, e, {L""}).c_str(), nullptr, 10))) //stoi(read_after(L"potcost:", L"types:", b, e, {L""})))
     , description(read_after(L"description:", L"extra:", b, e))
     , extra_information(read_after(L"extra:", L"name:", b, e))
     , applicable_types(types(b, e))
