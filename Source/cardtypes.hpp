@@ -11,6 +11,9 @@
   ==============================================================================
 */
 
+#include <cassert>
+#include <string>
+
 namespace SM	//(sudden magic)
 {
 namespace Dominion  //for all of the code related specifically to the deck-building game Dominion.
@@ -34,6 +37,100 @@ enum class Cardtypes
     , treasure
     , victory
 };  //end enum class Cardtypes
+
+inline auto cardtype_from_str(const std::wstring& in) -> Cardtypes
+{
+    if (in == L"Action")
+        return Cardtypes::action;
+    else if (in == L"Attack")
+        return Cardtypes::attack;
+    else if (in == L"Blank")
+        return Cardtypes::blank;
+    else if (in == L"Curse")
+        return Cardtypes::curse;
+    else if (in == L"Duration")
+        return Cardtypes::duration;
+    else if (in == L"Event")
+        return Cardtypes::event;
+    else if (in == L"Looter")
+        return Cardtypes::looter;
+    else if (in == L"Prize")
+        return Cardtypes::prize;
+    else if (in == L"Reaction")
+        return Cardtypes::reaction;
+    else if (in == L"Reserve")
+        return Cardtypes::reserve;
+    else if (in == L"Ruins")
+        return Cardtypes::ruins;
+    else if (in == L"Shelter")
+        return Cardtypes::shelter;
+    else if (in == L"Traveler")
+        return Cardtypes::traveler;
+    else if (in == L"Treasure")
+        return Cardtypes::treasure;
+    else if (in == L"Victory")
+        return Cardtypes::victory;
+    else
+        assert(!"reached invalid if statement in string to cardset conversion");
+
+    return Cardtypes::action;
+}
+
+inline auto str_from_cardtype(const Cardtypes in) -> std::wstring
+{
+    switch (in)
+    {
+    case(Cardtypes::action) :
+        return L"Action";
+        break;
+    case(Cardtypes::attack) :
+        return L"Attack";
+        break;
+    case(Cardtypes::blank) :
+        return L"Blank";
+        break;
+    case(Cardtypes::curse) :
+        return L"Curse";
+        break;
+    case(Cardtypes::duration) :
+        return L"Duration";
+        break;
+    case(Cardtypes::event) :
+        return L"Event";
+        break;
+    case(Cardtypes::looter) :
+        return L"Looter";
+        break;
+    case(Cardtypes::prize) :
+        return L"Prize";
+        break;
+    case(Cardtypes::reaction) :
+        return L"Reaction";
+        break;
+    case(Cardtypes::reserve) :
+        return L"Reserve";
+        break;
+    case(Cardtypes::ruins) :
+        return L"Ruins";
+        break;
+    case(Cardtypes::shelter) :
+        return L"Shelter";
+        break;
+    case(Cardtypes::traveler) :
+        return L"Traveler";
+        break;
+    case(Cardtypes::treasure) :
+        return L"Treasure";
+        break;
+    case(Cardtypes::victory) :
+        return L"Victory";
+        break;
+    default:
+        assert(!"reached invalid if statement in string to cardset conversion");
+        return L"Action";
+    }
+}
+
 }	//end namespace Dominion
 }	//end namespace SM (sudden magic)
 
