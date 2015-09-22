@@ -16,13 +16,18 @@
 
 #include <boost/range/algorithm/transform.hpp>
 
+namespace SM
+{
+namespace Dominion
+{
+
 //==============================================================================
-CardShuffleDisplay::CardShuffleDisplay()
+CardShuffleDisplay::CardShuffleDisplay(CardShuffler& shuf)
     : cardDisplayModel(SM::StringListBoxModel(10))
     , cardDisplayList(L"cardDisplayList", &cardDisplayModel)
     , shuffleButtonClicked(shuffleListener(*this))
     , shuffleButton(L"Shuffle", L"Shuffle the cards and display them.")
-    , shuf()
+    , shuf(shuf)
     , cards(SM::Dominion::read_cards())
 {
     addAndMakeVisible(&cardDisplayList);
@@ -50,21 +55,14 @@ void CardShuffleDisplay::paint (juce::Graphics& g) const
        drawing code..
     */
 
-    g.fillAll (juce::Colours::white);   // clear the background
+    g.fillAll (juce::Colours::black);   // clear the background
 
     g.setColour (juce::Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::lightblue);
-    g.setFont (14.0f);
-    g.drawText ("CardShuffleDisplay", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
 }
 
 void CardShuffleDisplay::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
     cardDisplayList.centreWithSize(getWidth(), 220);
     shuffleButton.centreWithSize(shuffleButton.getWidth(), shuffleButton.getHeight());
     shuffleButton.setTopLeftPosition(shuffleButton.getX(), cardDisplayList.getBottom() + 5);
@@ -81,3 +79,6 @@ auto CardShuffleDisplay::shuffle() -> void
     cardDisplayList.updateContent();
     cardDisplayList.repaint();
 }
+
+}   //end namespace Dominion
+}   //end namespace SM

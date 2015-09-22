@@ -13,6 +13,7 @@
 
 #include <cassert>
 #include <string>
+#include <vector>
 
 namespace SM	//(sudden magic)
 {
@@ -33,6 +34,21 @@ enum class Cardsets
     , prosperity
     , seaside
 };  //end enum class Cardsets
+
+inline auto cardset_vec() -> std::vector<Cardsets>
+{
+    return{{Cardsets::alchemy
+           , Cardsets::base
+           , Cardsets::cornucopia
+           , Cardsets::dark_ages
+           , Cardsets::dominion
+           , Cardsets::guilds
+           , Cardsets::hinterlands
+           , Cardsets::intrigue
+           , Cardsets::promo
+           , Cardsets::prosperity
+           , Cardsets::seaside}};
+}
 
 inline auto cardset_from_str(const std::wstring& cardset) -> Cardsets
 {

@@ -21,18 +21,22 @@
     </GROUP>
     <GROUP id="{56EB8080-E18D-A714-3ACE-2812849EFD6E}" name="Source">
       <GROUP id="{489BDC96-C21F-3614-2F81-8219FF9522F0}" name="Components">
-        <FILE id="TG4cTW" name="CardtypeToggle.cpp" compile="1" resource="0"
-              file="Source/CardtypeToggle.cpp"/>
-        <FILE id="UJ2yEQ" name="CardtypeToggle.hpp" compile="0" resource="0"
-              file="Source/CardtypeToggle.hpp"/>
+        <FILE id="r8lBcg" name="CardtypeToggleListener.cpp" compile="1" resource="0"
+              file="Source/CardtypeToggleListener.cpp"/>
+        <FILE id="lwuhDf" name="CardtypeToggleListener.hpp" compile="0" resource="0"
+              file="Source/CardtypeToggleListener.hpp"/>
+        <FILE id="iOIZUs" name="CardsetToggleListener.cpp" compile="1" resource="0"
+              file="Source/CardsetToggleListener.cpp"/>
+        <FILE id="gFcPWM" name="CardsetToggleListener.hpp" compile="0" resource="0"
+              file="Source/CardsetToggleListener.hpp"/>
+        <FILE id="eteAOZ" name="SettingsDisplay.cpp" compile="1" resource="0"
+              file="Source/SettingsDisplay.cpp"/>
+        <FILE id="wX9ajP" name="SettingsDisplay.hpp" compile="0" resource="0"
+              file="Source/SettingsDisplay.hpp"/>
         <FILE id="EL3m5T" name="CardShuffleDisplay.cpp" compile="1" resource="0"
               file="Source/CardShuffleDisplay.cpp"/>
         <FILE id="W7swIc" name="CardShuffleDisplay.hpp" compile="0" resource="0"
               file="Source/CardShuffleDisplay.hpp"/>
-        <FILE id="CHKsgE" name="CardsetToggle.cpp" compile="1" resource="0"
-              file="Source/CardsetToggle.cpp"/>
-        <FILE id="QQmflX" name="CardsetToggle.hpp" compile="0" resource="0"
-              file="Source/CardsetToggle.hpp"/>
       </GROUP>
       <FILE id="IfNILj" name="CardShuffler.cpp" compile="1" resource="0"
             file="Source/CardShuffler.cpp"/>

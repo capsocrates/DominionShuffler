@@ -10,6 +10,7 @@
 */
 
 #include "CardShuffleDisplay.hpp"
+#include "SettingsDisplay.hpp"
 
 #pragma warning(push, 0)
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -34,7 +35,9 @@ public:
 
 private:
     juce::TabbedComponent tabs;
-    CardShuffleDisplay cardDisplay;
+    SM::Dominion::CardShuffler shuf;
+    SM::Dominion::CardShuffleDisplay cardDisplay;
+    SM::Dominion::SettingsDisplay settingsDisplay;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainContentComponent)

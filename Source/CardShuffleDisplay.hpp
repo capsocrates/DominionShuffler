@@ -21,12 +21,16 @@
 #include <vector>
 
 //==============================================================================
-/*
-*/
+
+namespace SM
+{
+namespace Dominion
+{
+
 class CardShuffleDisplay : public juce::Component
 {
 public:
-    CardShuffleDisplay();
+    CardShuffleDisplay(CardShuffler&);
     ~CardShuffleDisplay();
 
     void paint (juce::Graphics&) const;
@@ -49,7 +53,7 @@ private:
     shuffleListener shuffleButtonClicked;
     juce::TextButton shuffleButton;
 
-    SM::Dominion::CardShuffler shuf;
+    CardShuffler& shuf;
     std::vector<SM::Dominion::RandomizerCard> cards;
 
     auto shuffle() -> void;
@@ -57,5 +61,7 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CardShuffleDisplay)
 };
 
+}   //end namespace Dominion
+}   //end namespace SM
 
 #endif  // CARDSHUFFLEDISPLAY_HPP_INCLUDED

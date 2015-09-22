@@ -13,6 +13,7 @@
 
 #include <cassert>
 #include <string>
+#include <vector>
 
 namespace SM	//(sudden magic)
 {
@@ -37,6 +38,25 @@ enum class Cardtypes
     , treasure
     , victory
 };  //end enum class Cardtypes
+
+inline auto cardtype_vec() -> std::vector<Cardtypes>
+{
+    return{{Cardtypes::action
+        , Cardtypes::attack
+        , Cardtypes::blank
+        , Cardtypes::curse
+        , Cardtypes::duration
+        , Cardtypes::event
+        , Cardtypes::looter
+        , Cardtypes::prize
+        , Cardtypes::reaction
+        , Cardtypes::reserve
+        , Cardtypes::ruins
+        , Cardtypes::shelter
+        , Cardtypes::traveler
+        , Cardtypes::treasure
+        , Cardtypes::victory}};
+}
 
 inline auto cardtype_from_str(const std::wstring& in) -> Cardtypes
 {

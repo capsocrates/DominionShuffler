@@ -13,17 +13,20 @@
 //==============================================================================
 MainContentComponent::MainContentComponent()
     : tabs(juce::TabbedButtonBar::TabsAtTop)
+    , shuf()
+    , cardDisplay(shuf)
+    , settingsDisplay(shuf)
 {
     #ifdef MOBILE_DEVICE_IS_BEING_COMPILED
         setFullScreen(true);
     #else
         setSize(250, 350);
     #endif
-    addAndMakeVisible(&tabs);
+    addAndMakeVisible(tabs);
     tabs.centreWithSize(getWidth(), getHeight());
     tabs.setTabBarDepth(30);
-    tabs.addTab(juce::translate("Cards"), juce::Colours::lightgrey, &cardDisplay, false);
-    tabs.addTab(juce::translate("Settings"), juce::Colours::lightgrey, 0, false);
+    tabs.addTab(juce::translate(L"Cards"), juce::Colours::lightgrey, &cardDisplay, false);
+    tabs.addTab(juce::translate(L"Settings"), juce::Colours::lightgrey, &settingsDisplay, false);
     tabs.setCurrentTabIndex(0);
 }
 
