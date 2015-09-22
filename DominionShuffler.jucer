@@ -88,10 +88,10 @@
     <VS2015 targetFolder="Builds/VisualStudio2015">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="DominionShuffler" warningsAreErrors="0"
+                       isDebug="1" optimisation="1" targetName="DominionShuffler" warningsAreErrors="1"
                        characterSet="Unicode" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="DominionShuffler" warningsAreErrors="0"
+                       isDebug="0" optimisation="3" targetName="DominionShuffler" warningsAreErrors="1"
                        characterSet="Unicode" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -134,15 +134,15 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <ANDROID targetFolder="Builds/Android" androidVersionCode="1" androidActivityClass="com.suddenmagic.dominionshuffler.DominionShuffler"
-             androidSDKPath="D:\Android\android-sdk" androidNDKPath="D:\android-ndk-r10e"
-             androidMinimumSDK="21" androidInternetNeeded="0" androidKeyStore="${user.home}/.android/debug.keystore"
-             androidKeyStorePass="android" androidKeyAlias="androiddebugkey"
-             androidKeyAliasPass="android" androidCpp11="1">
+             androidSDKPath="" androidNDKPath="" androidMinimumSDK="21" androidInternetNeeded="0"
+             androidKeyStore="${user.home}/.android/debug.keystore" androidKeyStorePass="android"
+             androidKeyAlias="androiddebugkey" androidKeyAliasPass="android"
+             androidCpp11="1" extraCompilerFlags="-std=c++11">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a" isDebug="1"
-                       optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
+                       optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic;D:\dev\tools\JUCE\modules\juce_graphics;D:\dev\tools\JUCE\modules\juce_data_structures"/>
         <CONFIGURATION name="Release" androidArchitectures="armeabi armeabi-v7a" isDebug="0"
-                       optimisation="3" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
+                       optimisation="3" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic;D:\dev\tools\JUCE\modules\juce_graphics;D:\dev\tools\JUCE\modules\juce_data_structures"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="..\..\..\tools\JUCE\modules"/>
@@ -160,6 +160,29 @@
         <MODULEPATH id="juce_audio_processors" path="..\..\..\tools\JUCE\modules"/>
       </MODULEPATHS>
     </ANDROID>
+    <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows" extraCompilerFlags="">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="DominionShuffler"
+                       headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic;D:\dev\tools\JUCE\modules\juce_events"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="DominionShuffler"
+                       headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic;D:\dev\tools\JUCE\modules\juce_events"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\tools\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\tools\JUCE\modules"/>
+      </MODULEPATHS>
+    </CODEBLOCKS_WINDOWS>
   </EXPORTFORMATS>
   <MODULES>
     <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
