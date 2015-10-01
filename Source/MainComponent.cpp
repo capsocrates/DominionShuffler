@@ -18,7 +18,7 @@ MainContentComponent::MainContentComponent()
     , settingsDisplay(shuf)
 {
     #ifdef MOBILE_DEVICE_IS_BEING_COMPILED
-        setFullScreen(true);
+        setSize(getParentWidth(), getParentHeight());
     #else
         setSize(250, 350);
     #endif

@@ -35,35 +35,38 @@ using vec_toggles = std::vector<toggle>;
 using vec_set = std::vector<CardsetToggleListener>;
 using vec_type = std::vector<CardtypeToggleListener>;
 
-auto make_cardset_toggles(CardShuffler& shuf) -> vec_set
+auto make_cardset_toggles(CardShuffler& /*shuf*/) -> vec_set
 {
-    using namespace boost::adaptors;
-    return boost::copy_range<vec_set>(cardset_vec()
-                                      | transformed([&shuf](const Cardsets in) -> CardsetToggleListener
-    {
-        return{in, shuf};
-    }));
+    //using namespace boost::adaptors;
+    //return boost::copy_range<vec_set>(cardset_vec()
+    //                                  | transformed([&shuf](const Cardsets in) -> CardsetToggleListener
+    //{
+    //    return{in, shuf};
+    //}));
+    return vec_set();
 }
 
-auto make_cardtype_toggles(CardShuffler& shuf) -> vec_type
+auto make_cardtype_toggles(CardShuffler& /*shuf*/) -> vec_type
 {
-    using namespace boost::adaptors;
-    return boost::copy_range<vec_type>(cardtype_vec()
-                                       | transformed([&shuf](const Cardtypes in) -> CardtypeToggleListener
-    {
-        return{in, shuf};
-    }));
+    //using namespace boost::adaptors;
+    //return boost::copy_range<vec_type>(cardtype_vec()
+    //                                   | transformed([&shuf](const Cardtypes in) -> CardtypeToggleListener
+    //{
+    //    return{in, shuf};
+    //}));
+    return vec_type();
 }
 
 auto make_toggle_buttons() -> vec_toggles
 {
-    auto typeF = []() -> auto {};
-    auto setF = []() -> auto {};
-    using namespace boost::adaptors;
-    return boost::copy_range<vec_toggles>(boost::join(cardtype_vec()
-                                                      | transformed(typeF)
-                                                      , cardset_vec()
-                                                      | transformed(setF)));
+    //auto typeF = []() -> auto {};
+    //auto setF = []() -> auto {};
+    //using namespace boost::adaptors;
+    //return boost::copy_range<vec_toggles>(boost::join(cardtype_vec()
+    //                                                  | transformed(typeF)
+    //                                                  , cardset_vec()
+    //                                                  | transformed(setF)));
+    return vec_toggles();
 }
 
 //==============================================================================
@@ -79,7 +82,7 @@ SettingsDisplay::SettingsDisplay(CardShuffler& shuf)
     view.addAndMakeVisible(subview);
     constexpr auto margin(int{5});
     constexpr auto height(int{25});
-    auto align_tops = [&](const auto top, juce::BooleanPropertyComponent& next) -> int
+    auto align_tops = [&](const int top, juce::BooleanPropertyComponent& next) -> int
     {
         subview.addAndMakeVisible(&next);
         next.centreWithSize(this->getWidth(), height);

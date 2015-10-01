@@ -109,10 +109,18 @@ void CardShuffler::disableCardtype(Cardtypes in)
     if (!filterExistsAlready(*new_filter))
         filters.emplace_back(std::move(new_filter));
 }
+auto CardShuffler::findFilter(const CardFilter& filter) -> filter_itr
+{
+    return boost::find_if(filters,
+                          [&filter](const filterT& lhs)
+    {
+        return lhs->uniqueID() == filter.uniqueID();
+    });
+}
 auto CardShuffler::findFilter(const CardFilter& filter) const -> filter_citr
 {
     return boost::find_if(filters,
-                          [&filter](const auto& lhs)
+                          [&filter](const filterT& lhs)
     {
         return lhs->uniqueID() == filter.uniqueID();
     });

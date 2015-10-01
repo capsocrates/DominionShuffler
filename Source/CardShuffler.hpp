@@ -110,6 +110,7 @@ private:
     typedef vec_filterT::iterator filter_itr;
     typedef vec_filterT::const_iterator filter_citr;
 
+    auto findFilter(const CardFilter& filter) -> filter_itr;
     auto findFilter(const CardFilter& filter) const -> filter_citr;
     auto filterExistsAlready(const CardFilter& filter) const -> bool;
 };  //end class CardShuffler
