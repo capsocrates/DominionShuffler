@@ -86,7 +86,7 @@ public:
         auto all_filters{[&one_filter](const RandomizerCard& card
                                       , const vec_filterT& all_filters) -> bool
         {
-            auto bind_one_filter = std::bind(one_filter, _1, std::ref(card));
+            auto bind_one_filter{std::bind(one_filter, _1, std::ref(card))};
             return boost::find_if(all_filters
                                   | indirected
                                   , bind_one_filter) == boost::end(all_filters
@@ -95,10 +95,14 @@ public:
 
         auto bind_all_filters{std::bind(all_filters, _1, std::ref(filters))};
 
+        /*
+        generate a range of the filtered input
+        shuffle that range
+        TODO: add post-shuffle filters
+        return the first 10 elements of that range
+        */
         RangeT return_val(boost::copy_range<RangeT>(in | filtered(bind_all_filters)));
-        boost::copy(boost::random_shuffle(return_val, gen)
-                    | sliced(0, std::min(count, return_val.size()))
-                    , begin(return_val));
+        boost::random_shuffle(return_val, gen);
         return boost::copy_range<RangeT>(return_val
                                          | copied(0, std::min(count, return_val.size())));
     }
