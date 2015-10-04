@@ -14,12 +14,15 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include <memory>
+#include <unordered_map>
 
 namespace SM
 {
 namespace Dominion
 {
 
+enum class Cardsets;
+enum class Cardtypes;
 class CardsetToggleListener;
 class CardtypeToggleListener;
 class CardShuffler;
@@ -36,6 +39,8 @@ public:
 private:
     juce::Viewport view;
     juce::Component subview;
+    std::unordered_map<Cardsets, juce::Value> setToggleValues;
+    std::unordered_map<Cardtypes, juce::Value> typeToggleValues;
     std::vector<CardsetToggleListener> setToggleListeners;
     std::vector<CardtypeToggleListener> typeToggleListeners;
     std::vector<std::unique_ptr<juce::BooleanPropertyComponent>> toggles;

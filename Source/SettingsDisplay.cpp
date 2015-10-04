@@ -35,63 +35,109 @@ using vec_toggles = std::vector<toggle>;
 using vec_set = std::vector<CardsetToggleListener>;
 using vec_type = std::vector<CardtypeToggleListener>;
 
-auto make_cardset_toggles(CardShuffler& /*shuf*/) -> vec_set
+using map_set_value = std::unordered_map<Cardsets, juce::Value>;
+using map_type_value = std::unordered_map<Cardtypes, juce::Value>;
+using set_value_pair = map_set_value::value_type;
+using type_value_pair = map_type_value::value_type;
+
+auto make_set_toggle_values() -> map_set_value
 {
-    //using namespace boost::adaptors;
-    //return boost::copy_range<vec_set>(cardset_vec()
-    //                                  | transformed([&shuf](const Cardsets in) -> CardsetToggleListener
-    //{
-    //    return{in, shuf};
-    //}));
-    return vec_set();
+    using namespace boost::adaptors;
+    return boost::copy_range<map_set_value>(filtered_cardset_vec()
+                                            | transformed([](const Cardsets in) -> set_value_pair
+    {
+        return std::make_pair(in, juce::Value(juce::var(false)));
+    }));
 }
 
-auto make_cardtype_toggles(CardShuffler& /*shuf*/) -> vec_type
+auto make_type_toggle_values() -> map_type_value
 {
-    //using namespace boost::adaptors;
-    //return boost::copy_range<vec_type>(cardtype_vec()
-    //                                   | transformed([&shuf](const Cardtypes in) -> CardtypeToggleListener
-    //{
-    //    return{in, shuf};
-    //}));
-    return vec_type();
+    using namespace boost::adaptors;
+    return boost::copy_range<map_type_value>(filtered_cardtype_vec()
+                                             | transformed([](const Cardtypes in) -> type_value_pair
+    {
+        return std::make_pair(in, juce::Value(juce::var(false)));
+    }));
 }
 
-auto make_toggle_buttons() -> vec_toggles
+auto make_cardset_toggles(CardShuffler& shuf, map_set_value& values) -> vec_set
 {
-    //auto typeF = []() -> auto {};
-    //auto setF = []() -> auto {};
-    //using namespace boost::adaptors;
-    //return boost::copy_range<vec_toggles>(boost::join(cardtype_vec()
-    //                                                  | transformed(typeF)
-    //                                                  , cardset_vec()
-    //                                                  | transformed(setF)));
-    return vec_toggles();
+    using namespace boost::adaptors;
+    return boost::copy_range<vec_set>(filtered_cardset_vec()
+                                      | transformed([&shuf, &values](const Cardsets in) -> CardsetToggleListener
+    {
+        CardsetToggleListener temp{in, shuf};
+        values.at(in).addListener(temp.getListener());
+        return temp;
+    }));
+}
+
+auto make_cardtype_toggles(CardShuffler& shuf, map_type_value& values) -> vec_type
+{
+    using namespace boost::adaptors;
+    return boost::copy_range<vec_type>(filtered_cardtype_vec()
+                                       | transformed([&shuf
+                                                     , &values](const Cardtypes in) -> CardtypeToggleListener
+    {
+        CardtypeToggleListener temp{in, shuf};
+        values.at(in).addListener(temp.getListener());
+        return temp;
+    }));
+}
+
+auto make_toggle_buttons(const map_set_value& sets, const map_type_value& types) -> vec_toggles
+{
+    auto setF = [](const set_value_pair& val) -> toggle
+    {
+        return std::make_unique<juce::BooleanPropertyComponent>(
+            val.second
+            , pretty_str_from_cardset(val.first).c_str()
+            , "");
+    };
+    auto typeF = [](const type_value_pair& val) -> toggle
+    {
+        return std::make_unique<juce::BooleanPropertyComponent>(
+            val.second
+            , str_from_cardtype(val.first).c_str()
+            , "");
+    };
+    vec_toggles return_vec(sets.size() + types.size());
+    boost::transform(sets, return_vec.begin(), setF);
+    boost::transform(types, return_vec.begin() + sets.size(), typeF);
+    return return_vec;
 }
 
 //==============================================================================
 SettingsDisplay::SettingsDisplay(CardShuffler& shuf)
     : view(L"SettingsView")
     , subview(L"Display")
-    , setToggleListeners(make_cardset_toggles(shuf))
-    , typeToggleListeners(make_cardtype_toggles(shuf))
-    , toggles(make_toggle_buttons())
+    , setToggleValues(make_set_toggle_values())
+    , typeToggleValues(make_type_toggle_values())
+    , setToggleListeners(make_cardset_toggles(shuf, setToggleValues))
+    , typeToggleListeners(make_cardtype_toggles(shuf, typeToggleValues))
+    , toggles(make_toggle_buttons(setToggleValues, typeToggleValues))
 {
     addAndMakeVisible(view);
     view.centreWithSize(getWidth(), getHeight());
-    view.addAndMakeVisible(subview);
+    view.setViewedComponent(&subview, false);
     constexpr auto margin(int{5});
     constexpr auto height(int{25});
-    auto align_tops = [&](const int top, juce::BooleanPropertyComponent& next) -> int
+    const auto width{view.getWidth() - view.getScrollBarThickness()};
+    auto& subviewRef{subview};
+    auto align_tops = [&subviewRef
+        , width
+        , height
+        , margin](const int top
+                  , juce::BooleanPropertyComponent& next) -> int
     {
-        subview.addAndMakeVisible(&next);
-        next.centreWithSize(this->getWidth(), height);
+        subviewRef.addAndMakeVisible(&next);
+        next.centreWithSize(width, height);
         next.setTopLeftPosition(margin, top);
         next.setState(true);
         return next.getBottom() + margin;
     };
     using namespace boost::adaptors;
-    subview.centreWithSize(view.getWidth(),
+    subview.centreWithSize(width,
                            boost::accumulate(toggles
                                              | indirected
                                              , margin
@@ -127,14 +173,14 @@ void SettingsDisplay::resized()
     // components that your component contains..
 
     view.centreWithSize(getWidth(), getHeight());
-    subview.centreWithSize(view.getWidth(), subview.getHeight());
+    subview.centreWithSize(view.getWidth() - view.getScrollBarThickness(), subview.getHeight());
     subview.setTopLeftPosition(0, 0);
 
     for (auto& in : toggles)
     {
         auto margin(int{in->getX()});
         auto top(int{in->getY()});
-        in->centreWithSize(getWidth() - margin, in->getHeight());
+        in->centreWithSize(view.getViewWidth() - margin, in->getHeight());
         in->setTopLeftPosition(margin, top);
     }
 }

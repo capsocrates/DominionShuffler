@@ -68,21 +68,16 @@ public:
 CardShuffler::CardShuffler()
     : generator(engine())
 {
-    disableCardset(Cardsets::alchemy);
     disableCardset(Cardsets::base);
-    disableCardset(Cardsets::cornucopia);
-    disableCardset(Cardsets::dark_ages);
-    disableCardset(Cardsets::guilds);
-    disableCardset(Cardsets::hinterlands);
-    disableCardset(Cardsets::intrigue);
-    disableCardset(Cardsets::promo);
-    disableCardset(Cardsets::prosperity);
-    disableCardset(Cardsets::seaside);
+    disableCardtype(Cardtypes::blank);
+    disableCardtype(Cardtypes::curse);
+    disableCardtype(Cardtypes::ruins);
+    disableCardtype(Cardtypes::shelter);
 }
 void CardShuffler::enableCardset(Cardsets in)
 {
     //enabling a Cardset will actually be removing the filter that is keeping it from sticking around
-    auto filter_to_remove = std::unique_ptr<CardFilter>(new CardsetFilter{in, true});
+    auto filter_to_remove = std::make_unique<CardsetFilter>(in, true);
     if (filterExistsAlready(*filter_to_remove))
     {
         filters.erase(findFilter(*filter_to_remove));
@@ -91,21 +86,21 @@ void CardShuffler::enableCardset(Cardsets in)
 void CardShuffler::disableCardset(Cardsets in)
 {
     //disabling a Cardset means adding a filter that will exclude it
-    auto new_filter = std::unique_ptr<CardFilter>(new CardsetFilter{in, false});
+    auto new_filter = std::make_unique<CardsetFilter>(in, false);
     if (!filterExistsAlready(*new_filter))
         filters.emplace_back(std::move(new_filter));
 }
 void CardShuffler::enableCardtype(Cardtypes in)
 {
     //enabling a Cardtype will actually be removing the filter that is keeping it from sticking around
-    auto filter_to_remove = std::unique_ptr<CardFilter>(new CardtypeFilter{in, true});
+    auto filter_to_remove = std::make_unique<CardtypeFilter>(in, true);
     if (filterExistsAlready(*filter_to_remove))
         filters.erase(findFilter(*filter_to_remove));
 }
 void CardShuffler::disableCardtype(Cardtypes in)
 {
     //disabling a Cardtype means adding a filter that will exclude it
-    auto new_filter = std::unique_ptr<CardFilter>(new CardtypeFilter{in, false});
+    auto new_filter = std::make_unique<CardtypeFilter>(in, false);
     if (!filterExistsAlready(*new_filter))
         filters.emplace_back(std::move(new_filter));
 }

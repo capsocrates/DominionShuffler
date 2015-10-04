@@ -19,19 +19,39 @@ namespace SM
 {
 namespace Dominion
 {
-CardtypeToggleListener::CardtypeToggleListener(Cardtypes type, CardShuffler& shuf)
+CardtypeToggleListener::ListenImpl::ListenImpl(Cardtypes type, CardShuffler& shuf)
     : type(type)
     , shuf(shuf)
 {
 }
 
-auto CardtypeToggleListener::valueChanged(juce::Value& val) -> void
+auto CardtypeToggleListener::ListenImpl::valueChanged(juce::Value& val) -> void
 {
     assert(val.getValue().isBool());
     if (val.getValue().operator bool())
         shuf.enableCardtype(type);
     else
         shuf.disableCardtype(type);
+}
+
+auto CardtypeToggleListener::ListenImpl::getCardtype() const -> Cardtypes
+{
+    return type;
+}
+
+CardtypeToggleListener::CardtypeToggleListener(const Cardtypes type, CardShuffler& shuf)
+    : impl{std::make_unique<CardtypeToggleListener::ListenImpl>(type, shuf)}
+{
+}
+
+auto CardtypeToggleListener::getCardtype() const -> Cardtypes
+{
+    return impl->getCardtype();
+}
+
+auto CardtypeToggleListener::getListener() -> ListenImpl *const
+{
+    return impl.get();
 }
 
 }   //end namespace Dominion

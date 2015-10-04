@@ -13,21 +13,43 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include <memory>
+
 namespace SM
 {
 namespace Dominion
 {
 enum class Cardtypes;
 class CardShuffler;
-class CardtypeToggleListener : public juce::Value::Listener
+class CardtypeToggleListener
 {
+    /*
+    The method I use to create these listeners involves
+    creating them in a function, then passing them to
+    value->addListener() by pointer, then returning them
+    from the function, which invalidates their addres.
+    So I stored the listener as a pointer inside this class,
+    so this class can be passed around without invalidating the
+    address of the listener. This also means I can move
+    the ListenImpl into another file as a compilation firewall
+    if I want to.
+    */
+    class ListenImpl : public juce::Value::Listener
+    {
+    public:
+        ListenImpl(const Cardtypes, CardShuffler&);
+        auto valueChanged(juce::Value&) -> void override;
+        auto getCardtype() const->Cardtypes;
+    private:
+        Cardtypes type;
+        CardShuffler& shuf;
+    };  //end class ListenImpl
+    std::unique_ptr<ListenImpl> impl;
 public:
-    CardtypeToggleListener(Cardtypes, CardShuffler&);
-    auto valueChanged(juce::Value&) -> void override;
-private:
-    Cardtypes type;
-    CardShuffler& shuf;
-};  //end class CardtypeToggleListener
+    CardtypeToggleListener(const Cardtypes, CardShuffler&);
+    auto getCardtype() const -> Cardtypes;
+    auto getListener() -> ListenImpl *const;
+};
 }   //end namespace Dominion
 }   //end namespace SM
 

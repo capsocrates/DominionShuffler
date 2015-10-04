@@ -50,6 +50,20 @@ inline auto cardset_vec() -> std::vector<Cardsets>
            , Cardsets::seaside}};
 }
 
+inline auto filtered_cardset_vec() -> std::vector<Cardsets>
+{
+    return{{Cardsets::alchemy
+        , Cardsets::cornucopia
+        , Cardsets::dark_ages
+        , Cardsets::dominion
+        , Cardsets::guilds
+        , Cardsets::hinterlands
+        , Cardsets::intrigue
+        , Cardsets::promo
+        , Cardsets::prosperity
+        , Cardsets::seaside}};
+}
+
 inline auto cardset_from_str(const std::wstring& cardset) -> Cardsets
 {
     if (cardset == L"alchemy")
@@ -78,6 +92,49 @@ inline auto cardset_from_str(const std::wstring& cardset) -> Cardsets
         assert(!"reached invalid if statement in string to cardset conversion");
 
     return Cardsets::base;
+}
+
+inline auto pretty_str_from_cardset(const Cardsets in)->std::wstring
+{
+    switch (in)
+    {
+    case(Cardsets::alchemy) :
+        return L"Alchemy";
+        break;
+    case(Cardsets::base) :
+        return L"Base Cards";
+        break;
+    case(Cardsets::cornucopia) :
+        return L"Cornucopia";
+        break;
+    case(Cardsets::dark_ages) :
+        return L"Dark Ages";
+        break;
+    case(Cardsets::dominion) :
+        return L"Dominion";
+        break;
+    case(Cardsets::guilds) :
+        return L"Guilds";
+        break;
+    case(Cardsets::hinterlands) :
+        return L"Hinterlands";
+        break;
+    case(Cardsets::intrigue) :
+        return L"Intrigue";
+        break;
+    case(Cardsets::promo) :
+        return L"Promo Cards";
+        break;
+    case(Cardsets::prosperity) :
+        return L"Prosperity";
+        break;
+    case(Cardsets::seaside) :
+        return L"Seaside";
+        break;
+    default:
+        assert(!"reached invalid if statement in cardset to pretty string conversion");
+        return L"Base";
+    }
 }
 
 inline auto str_from_cardset(const Cardsets in) -> std::wstring
@@ -118,7 +175,7 @@ inline auto str_from_cardset(const Cardsets in) -> std::wstring
         return L"seaside";
         break;
     default:
-        assert(!"reached invalid if statement in string to cardset conversion");
+        assert(!"reached invalid if statement in cardset to string conversion");
         return L"base";
     }
 

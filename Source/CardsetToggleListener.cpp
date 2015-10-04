@@ -19,19 +19,39 @@ namespace SM
 {
 namespace Dominion
 {
-CardsetToggleListener::CardsetToggleListener(Cardsets set, CardShuffler& shuf)
+CardsetToggleListener::ListenImpl::ListenImpl(Cardsets set, CardShuffler& shuf)
     : set(set)
     , shuf(shuf)
 {
 }
 
-auto CardsetToggleListener::valueChanged(juce::Value& val) -> void
+auto CardsetToggleListener::ListenImpl::valueChanged(juce::Value& val) -> void
 {
     assert(val.getValue().isBool());
     if (val.getValue().operator bool())
         shuf.enableCardset(set);
     else
         shuf.disableCardset(set);
+}
+
+auto CardsetToggleListener::ListenImpl::getCardset() const -> Cardsets
+{
+    return set;
+}
+
+CardsetToggleListener::CardsetToggleListener(const Cardsets set, CardShuffler& shuf)
+    : impl{std::make_unique<CardsetToggleListener::ListenImpl>(set, shuf)}
+{
+}
+
+auto CardsetToggleListener::getCardset() const -> Cardsets
+{
+    return impl->getCardset();
+}
+
+auto CardsetToggleListener::getListener() -> ListenImpl *const
+{
+    return impl.get();
 }
 
 }   //end namespace Dominion

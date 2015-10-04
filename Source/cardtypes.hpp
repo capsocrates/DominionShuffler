@@ -58,6 +58,20 @@ inline auto cardtype_vec() -> std::vector<Cardtypes>
         , Cardtypes::victory}};
 }
 
+inline auto filtered_cardtype_vec() -> std::vector<Cardtypes>
+{
+    return{{Cardtypes::action
+        , Cardtypes::attack
+        , Cardtypes::duration
+        , Cardtypes::event
+        , Cardtypes::looter
+        , Cardtypes::reaction
+        , Cardtypes::reserve
+        , Cardtypes::traveler
+        , Cardtypes::treasure
+        , Cardtypes::victory}};
+}
+
 inline auto cardtype_from_str(const std::wstring& in) -> Cardtypes
 {
     if (in == L"Action")

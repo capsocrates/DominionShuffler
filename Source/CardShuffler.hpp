@@ -58,42 +58,49 @@ public:
     auto shuffle(RangeT& in,
                  typename RangeT::size_type count) -> RangeT
     {
-        typedef typename std::iterator_traits<typename RangeT::iterator>::difference_type diff_t;
-        typedef typename std::make_unsigned<diff_t>::type udiff_t;
-        typedef typename std::uniform_int_distribution<udiff_t> distr_t;
-        typedef typename distr_t::param_type param_t;
+        using diff_t = std::iterator_traits<typename RangeT::iterator>::difference_type;
+        using udiff_t = std::make_unsigned<diff_t>::type;
+        using distr_t = std::uniform_int_distribution<udiff_t>;
+        using param_t = distr_t::param_type;
 
         distr_t distr;
         using namespace std::placeholders;
-        auto gen = std::bind([](udiff_t i,
-                                distr_t& distr,
-                                std::mt19937& gtor) -> udiff_t
-        {
-            return distr(gtor, param_t(0, i - 1));
-        },
-                             _1,
-            std::ref(distr),
-            std::ref(generator));
+        auto gen{std::bind(
+                    [](udiff_t i
+                      , distr_t& distr
+                      , std::mt19937& gtor) -> udiff_t
+                      {
+                        return distr(gtor, param_t(0, i - 1));
+                      }
+                    , _1
+                    , std::ref(distr)
+                    , std::ref(generator))};
 
-        auto one_filter = [](const CardFilter& filter, const RandomizerCard& card) -> bool
+        auto one_filter{[](const CardFilter& filter, const RandomizerCard& card) -> bool
         {
             //will return true if the card should be filtered out
             return !filter(card);
-        };
+        }};
 
         using namespace boost::adaptors;
-        auto all_filters = [&one_filter](const RandomizerCard& card, const vec_filterT& all_filters) -> bool
+        auto all_filters{[&one_filter](const RandomizerCard& card
+                                      , const vec_filterT& all_filters) -> bool
         {
             auto bind_one_filter = std::bind(one_filter, _1, std::ref(card));
-            return boost::find_if(all_filters | indirected, bind_one_filter) == boost::end(all_filters | indirected);
-        };
+            return boost::find_if(all_filters
+                                  | indirected
+                                  , bind_one_filter) == boost::end(all_filters
+                                                                   | indirected);
+        }};
 
-        auto bind_all_filters = std::bind(all_filters, _1, std::ref(filters));
+        auto bind_all_filters{std::bind(all_filters, _1, std::ref(filters))};
 
-        RangeT return_val = boost::copy_range<RangeT>(in | filtered(bind_all_filters));
-        boost::copy(boost::random_shuffle(return_val, gen) | sliced(0, count),
-                    begin(return_val));
-        return boost::copy_range<RangeT>(return_val | copied(0, count));
+        RangeT return_val(boost::copy_range<RangeT>(in | filtered(bind_all_filters)));
+        boost::copy(boost::random_shuffle(return_val, gen)
+                    | sliced(0, std::min(count, return_val.size()))
+                    , begin(return_val));
+        return boost::copy_range<RangeT>(return_val
+                                         | copied(0, std::min(count, return_val.size())));
     }
 
     void enableCardset(Cardsets in);
@@ -110,8 +117,8 @@ private:
     typedef vec_filterT::iterator filter_itr;
     typedef vec_filterT::const_iterator filter_citr;
 
-    auto findFilter(const CardFilter& filter) -> filter_itr;
-    auto findFilter(const CardFilter& filter) const -> filter_citr;
+    auto findFilter(const CardFilter& filter)->filter_itr;
+    auto findFilter(const CardFilter& filter) const->filter_citr;
     auto filterExistsAlready(const CardFilter& filter) const -> bool;
 };  //end class CardShuffler
 
