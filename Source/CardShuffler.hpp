@@ -46,7 +46,7 @@ public:
     };
 private:
     virtual auto checkFilter(const RandomizerCard& in) const -> bool = 0;
-    virtual auto getUniqueID() const->std::wstring = 0;
+    virtual auto getUniqueID() const -> std::wstring = 0;
 };
 
 class CardShuffler
@@ -93,7 +93,7 @@ public:
                                                                    | indirected);
         }};
 
-        auto bind_all_filters{std::bind(all_filters, _1, std::ref(filters))};
+        auto bind_all_filters{std::bind(all_filters, _1, std::ref(pre_filters))};
 
         /*
         generate a range of the filtered input
@@ -107,22 +107,26 @@ public:
                                          | copied(0, std::min(count, return_val.size())));
     }
 
-    void enableCardset(Cardsets in);
-    void disableCardset(Cardsets in);
+    auto enableCardset(Cardsets in) -> void;
+    auto disableCardset(Cardsets in) -> void;
+    auto cardsetEnabled(Cardsets in) -> bool;
 
-    void enableCardtype(Cardtypes in);
-    void disableCardtype(Cardtypes in);
+    auto enableCardtype(Cardtypes in) -> void;
+    auto disableCardtype(Cardtypes in) -> void;
+    auto cardtypeEnabled(Cardtypes in) -> bool;
 private:
     std::random_device engine;
     std::mt19937 generator;
+    //TODO: add a uniform_int_distribution filter
     typedef std::unique_ptr<CardFilter> filterT;
     typedef std::vector<filterT> vec_filterT;
-    vec_filterT filters;
+    vec_filterT pre_filters;
+    vec_filterT post_filters;
     typedef vec_filterT::iterator filter_itr;
     typedef vec_filterT::const_iterator filter_citr;
 
-    auto findFilter(const CardFilter& filter)->filter_itr;
-    auto findFilter(const CardFilter& filter) const->filter_citr;
+    auto findFilter(const CardFilter& filter) -> filter_itr;
+    auto findFilter(const CardFilter& filter) const -> filter_citr;
     auto filterExistsAlready(const CardFilter& filter) const -> bool;
 };  //end class CardShuffler
 

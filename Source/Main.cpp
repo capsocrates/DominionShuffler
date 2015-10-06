@@ -13,6 +13,7 @@
 #pragma warning(pop)
 #include "MainComponent.h"
 
+#include "Tests/TestRunner.hpp"
 
 //==============================================================================
 class DominionShufflerApplication : public juce::JUCEApplication
@@ -28,7 +29,13 @@ public:
     //==============================================================================
     void initialise(const juce::String& /*commandLine*/) override
     {
-        // This method is where you should put your application's initialisation code..
+        /*
+        performing unit tests as part of main initialization.
+        someday this needs to be split into a separate step--probably
+        as part of a continuous integration server.
+        */
+        SM::UnitTestRunner tester;
+        tester.runAllTests();
 
         mainWindow = new MainWindow(getApplicationName());
     }

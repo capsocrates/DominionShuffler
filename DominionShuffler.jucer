@@ -16,6 +16,22 @@
       <FILE id="aGSYWY" name="CardText.hpp" compile="0" resource="0" file="Source/CardText.hpp"/>
     </GROUP>
     <GROUP id="{CE76087F-7E2C-D2D5-AA5B-F36BC98F95DE}" name="Tests">
+      <FILE id="vBqzld" name="UnitTestPostFilters.cpp" compile="1" resource="0"
+            file="Source/Tests/UnitTestPostFilters.cpp"/>
+      <FILE id="Pv3LMg" name="UnitTestPostFilters.hpp" compile="0" resource="0"
+            file="Source/Tests/UnitTestPostFilters.hpp"/>
+      <FILE id="xAjLXa" name="UnitTestCardtypeFilters.cpp" compile="1" resource="0"
+            file="Source/Tests/UnitTestCardtypeFilters.cpp"/>
+      <FILE id="c74BEi" name="UnitTestCardtypeFilters.hpp" compile="0" resource="0"
+            file="Source/Tests/UnitTestCardtypeFilters.hpp"/>
+      <FILE id="ywufCu" name="UnitTestCardsetFilters.cpp" compile="1" resource="0"
+            file="Source/Tests/UnitTestCardsetFilters.cpp"/>
+      <FILE id="FUIFXs" name="UnitTestCardsetFilters.hpp" compile="0" resource="0"
+            file="Source/Tests/UnitTestCardsetFilters.hpp"/>
+      <FILE id="yr7DO9" name="UnitTestShuffleFilters.cpp" compile="1" resource="0"
+            file="Source/Tests/UnitTestShuffleFilters.cpp"/>
+      <FILE id="MwuiNC" name="UnitTestShuffleFilters.hpp" compile="0" resource="0"
+            file="Source/Tests/UnitTestShuffleFilters.hpp"/>
       <FILE id="DkPWGs" name="TestRunner.cpp" compile="1" resource="0" file="Source/Tests/TestRunner.cpp"/>
       <FILE id="DDi8AP" name="TestRunner.hpp" compile="0" resource="0" file="Source/Tests/TestRunner.hpp"/>
     </GROUP>

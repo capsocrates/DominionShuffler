@@ -30,7 +30,7 @@ namespace Dominion
 class CardShuffleDisplay : public juce::Component
 {
 public:
-    CardShuffleDisplay(CardShuffler&);
+    explicit CardShuffleDisplay(CardShuffler&);
     ~CardShuffleDisplay();
 
     void paint (juce::Graphics&) const;

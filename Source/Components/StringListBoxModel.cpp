@@ -29,11 +29,11 @@ int StringListBoxModel::getNumRows()
     return static_cast<int>(items.size());
 }
 
-void StringListBoxModel::paintListBoxItem(const int rowNumber,
-                                          juce::Graphics &g,
-                                          const int width,
-                                          const int height,
-                                          const bool /*rowIsSelected*/)
+void StringListBoxModel::paintListBoxItem(const int rowNumber
+, juce::Graphics &g
+, const int width
+, const int height
+, const bool /*rowIsSelected*/)
 {
     if (rowNumber < getNumRows())
     {

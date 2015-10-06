@@ -11,8 +11,9 @@
   ==============================================================================
 */
 
-/*
-#include "../JuceLibraryCode/juce_UnitTest.h"
+#pragma warning(push, 0)
+#include "../JuceLibraryCode/JuceHeader.h"
+#pragma warning(pop)
 
 namespace SM
 {
@@ -20,6 +21,5 @@ class UnitTestRunner : public juce::UnitTestRunner
 {
 };
 }   //end namespace SM
-*/
 
 #endif  // TEST_RUNNER_HPP_INCLUDED
