@@ -29,9 +29,9 @@ auto CardsetToggleListener::ListenImpl::valueChanged(juce::Value& val) -> void
 {
     assert(val.getValue().isBool());
     if (val.getValue().operator bool())
-        shuf.enableCardset(set);
+        shuf.enable(set);
     else
-        shuf.disableCardset(set);
+        shuf.disable(set);
 }
 
 auto CardsetToggleListener::ListenImpl::getCardset() const -> Cardsets

@@ -20,24 +20,24 @@ auto UnitTestCardsetFilters::runTest() -> void
 {
     beginTest("Beginning cardset disable testing");
     using sets = Dominion::Cardsets;
-    shuf->disableCardset(sets::dominion);
+    shuf->disable(sets::dominion);
 
-    expect(!shuf->cardsetEnabled(sets::dominion)
+    expect(!shuf->isEnabled(sets::dominion)
            , "disabling a single cardset does not work");
 
-    shuf->disableCardset(sets::prosperity);
+    shuf->disable(sets::prosperity);
 
-    expect(!shuf->cardsetEnabled(sets::dominion)
+    expect(!shuf->isEnabled(sets::dominion)
            , "disabling a second cardset re-enables a previously disabled cardset");
-    expect(!shuf->cardsetEnabled(sets::prosperity)
+    expect(!shuf->isEnabled(sets::prosperity)
            , "disabling a second cardset does not work");
 
     beginTest("Beginning cardset enable testing");
-    shuf->enableCardset(sets::dominion);
+    shuf->enable(sets::dominion);
 
-    expect(!shuf->cardsetEnabled(sets::prosperity)
+    expect(!shuf->isEnabled(sets::prosperity)
            , "re-enabling a previously disabled cardset also enables an unrelated cardset");
-    expect(shuf->cardsetEnabled(sets::dominion)
+    expect(shuf->isEnabled(sets::dominion)
            , "re-enabling a previously disabled cardset does not work");
 }
 }   //end namespace SM

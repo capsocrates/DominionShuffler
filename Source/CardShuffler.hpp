@@ -20,6 +20,7 @@
 #include <boost/range/sub_range.hpp>
 
 #include <functional>   //for std::bind
+#include <unordered_map>
 #include <memory>
 #include <random>
 
@@ -46,7 +47,7 @@ public:
     };
 private:
     virtual auto checkFilter(const RandomizerCard& in) const -> bool = 0;
-    virtual auto getUniqueID() const -> std::wstring = 0;
+    virtual auto getUniqueID() const->std::wstring = 0;
 };
 
 class CardShuffler
@@ -55,8 +56,8 @@ public:
     CardShuffler();
 
     template<typename RangeT>
-    auto shuffle(RangeT& in,
-                 typename RangeT::size_type count) -> RangeT
+    auto shuffle(RangeT& in
+                 , typename RangeT::size_type count) -> RangeT
     {
         using diff_t = std::iterator_traits<typename RangeT::iterator>::difference_type;
         using udiff_t = std::make_unsigned<diff_t>::type;
@@ -107,26 +108,94 @@ public:
                                          | copied(0, std::min(count, return_val.size())));
     }
 
-    auto enableCardset(Cardsets in) -> void;
-    auto disableCardset(Cardsets in) -> void;
-    auto cardsetEnabled(Cardsets in) -> bool;
+    auto enable(Cardsets) -> void;
+    auto disable(Cardsets) -> void;
+    auto isEnabled(Cardsets) const -> bool;
 
-    auto enableCardtype(Cardtypes in) -> void;
-    auto disableCardtype(Cardtypes in) -> void;
-    auto cardtypeEnabled(Cardtypes in) -> bool;
+    auto enable(Cardtypes) -> void;
+    auto disable(Cardtypes) -> void;
+    auto isEnabled(Cardtypes) const -> bool;
+
+    auto setMin(Cardsets, int) -> void;
+    auto setMax(Cardsets, int) -> void;
+    auto getMin(Cardsets) const -> int;
+    auto getMax(Cardsets) const -> int;
+
+    auto setMin(Cardtypes, int) -> void;
+    auto setMax(Cardtypes, int) -> void;
+    auto getMin(Cardtypes) const -> int;
+    auto getMax(Cardtypes) const -> int;
 private:
     std::random_device engine;
     std::mt19937 generator;
-    //TODO: add a uniform_int_distribution filter
-    typedef std::unique_ptr<CardFilter> filterT;
-    typedef std::vector<filterT> vec_filterT;
+    using filterT = std::unique_ptr<CardFilter>;
+    using vec_filterT = std::vector<filterT>;
     vec_filterT pre_filters;
-    vec_filterT post_filters;
-    typedef vec_filterT::iterator filter_itr;
-    typedef vec_filterT::const_iterator filter_citr;
+    using filter_itr = vec_filterT::iterator;
+    using filter_citr = vec_filterT::const_iterator;
 
-    auto findFilter(const CardFilter& filter) -> filter_itr;
-    auto findFilter(const CardFilter& filter) const -> filter_citr;
+    const static int default_min{0};
+    const static int default_max{10};
+
+    struct min_max
+    {
+        int min{default_min};
+        int max{default_max};
+        min_max(int min, int max) : min{min}, max{max} {};
+    };
+
+    template<typename KeyT>
+    using min_max_mapT = std::unordered_map<KeyT, min_max>;
+
+    min_max_mapT<Cardsets> sets_min_max;
+    min_max_mapT<Cardtypes> types_min_max;
+
+    template<typename Type>
+    inline auto setMin(const Type in, const int new_min, min_max_mapT<Type>& min_max_map) -> void
+    {
+        assert(new_min >= default_min);
+
+        auto location_itr{min_max_map.find(in)};
+        if (location_itr != std::end(min_max_map))
+            location_itr->second.min = new_min;
+        else
+            min_max_map.emplace(in, min_max{new_min, default_max});
+    }
+
+    template<typename Type>
+    inline auto setMax(const Type in, const int new_max, min_max_mapT<Type>& min_max_map) -> void
+    {
+        assert(new_max <= default_max);
+
+        auto location_itr{min_max_map.find(in)};
+        if (location_itr != std::end(min_max_map))
+            location_itr->second.max = new_max;
+        else
+            min_max_map.emplace(in, min_max{default_min, new_max});
+    }
+
+    template<typename Type>
+    inline auto getMin(const Type in, const min_max_mapT<Type>& min_max) const -> int
+    {
+        auto location_itr{min_max.find(in)};
+        if (location_itr != std::end(min_max))
+            return location_itr->second.min;
+        else
+            return default_min;
+    }
+
+    template<typename Type>
+    inline auto getMax(const Type in, const min_max_mapT<Type>& min_max) const -> int
+    {
+        auto location_itr{min_max.find(in)};
+        if (location_itr != std::end(min_max))
+            return location_itr->second.max;
+        else
+            return default_max;
+    }
+
+    auto findFilter(const CardFilter& filter)->filter_itr;
+    auto findFilter(const CardFilter& filter) const->filter_citr;
     auto filterExistsAlready(const CardFilter& filter) const -> bool;
 };  //end class CardShuffler
 

@@ -29,9 +29,9 @@ auto CardtypeToggleListener::ListenImpl::valueChanged(juce::Value& val) -> void
 {
     assert(val.getValue().isBool());
     if (val.getValue().operator bool())
-        shuf.enableCardtype(type);
+        shuf.enable(type);
     else
-        shuf.disableCardtype(type);
+        shuf.disable(type);
 }
 
 auto CardtypeToggleListener::ListenImpl::getCardtype() const -> Cardtypes

@@ -20,24 +20,24 @@ auto UnitTestCardtypeFilters::runTest() -> void
 {
     beginTest("Beginning cardtype disable testing");
     using types = Dominion::Cardtypes;
-    shuf->disableCardtype(types::action);
+    shuf->disable(types::action);
 
-    expect(!shuf->cardtypeEnabled(types::action)
+    expect(!shuf->isEnabled(types::action)
            , "disabling a single cardtype does not work");
 
-    shuf->disableCardtype(types::attack);
+    shuf->disable(types::attack);
 
-    expect(!shuf->cardtypeEnabled(types::action)
+    expect(!shuf->isEnabled(types::action)
            , "disabling a second cardtype re-enables a previously disabled cardtype");
-    expect(!shuf->cardtypeEnabled(types::attack)
+    expect(!shuf->isEnabled(types::attack)
            , "disabling a second cardtype does not work");
 
     beginTest("Beginning cardtype enable testing");
-    shuf->enableCardtype(types::action);
+    shuf->enable(types::action);
 
-    expect(!shuf->cardtypeEnabled(types::attack)
+    expect(!shuf->isEnabled(types::attack)
            , "re-enabling a previously disabled cardtype also enables an unrelated cardtype");
-    expect(shuf->cardtypeEnabled(types::action)
+    expect(shuf->isEnabled(types::action)
            , "re-enabling a previously disabled cardtype does not work");
 }
 }   //end namespace SM

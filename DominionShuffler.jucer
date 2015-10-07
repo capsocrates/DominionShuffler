@@ -123,10 +123,10 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="DominionShuffler" warningsAreErrors="1"
-                       characterSet="Unicode" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
+                       characterSet="Unicode" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="DominionShuffler" warningsAreErrors="1"
-                       characterSet="Unicode" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
+                       characterSet="Unicode" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../tools\JUCE\modules"/>
@@ -174,9 +174,9 @@
              androidCpp11="0" extraCompilerFlags="-std=c++1y" extraDefs="MOBILE_DEVICE_IS_BEING_COMPILED=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a" isDebug="1"
-                       optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
+                       optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"/>
         <CONFIGURATION name="Release" androidArchitectures="armeabi armeabi-v7a" isDebug="0"
-                       optimisation="3" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic"/>
+                       optimisation="3" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../tools\JUCE\modules"/>
@@ -197,9 +197,9 @@
     <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows" extraCompilerFlags="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="DominionShuffler"
-                       headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic;D:\dev\tools\JUCE\modules\juce_events"/>
+                       headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="DominionShuffler"
-                       headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\SuddenMagic;D:\dev\tools\JUCE\modules\juce_events"/>
+                       headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="../../../tools\JUCE\modules"/>
