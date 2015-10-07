@@ -12,6 +12,7 @@
 */
 
 #include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/indexed.hpp>
 #include <boost/range/adaptor/indirected.hpp>
 #include <boost/range/adaptor/copied.hpp>
 #include <boost/range/algorithm/copy.hpp>
@@ -99,6 +100,26 @@ public:
         /*
         generate a range of the filtered input
         shuffle that range
+        create two temporary ranges to store cards that satisfy our filter 
+            requirements and also cards that DON'T satisfy them.
+            These temporary ranges will record the order their elements were 
+            added (via boost::adaptors::indexed) even if they are rearranged
+        step over the return range and put all the elements that satisfy filter
+            criteria into the first temporary range, and all the others into
+            the second temporary range
+        check to see how many elements are required in the first temporary range
+            in order to make that range satisfy all requirements
+        if the requirements can not be satisfied by the entirety of the first temporary
+            range, then no amount of re-ordering will suffice, and we must return
+            with an unsatisfactory range
+        if the required elements are less than count, we can "truncate" past the 
+            last required element, and then iterate over the first and second 
+            temporary ranges, appending whichever element has a lower index until we
+            reach count
+        if the required elements are greater than count, we perform some magic
+            (perhaps using next_permutation?) to see if we can satisfy the requirements
+            with only count or less elements. This could be expensive, so we need to be
+            careful with it
         TODO: add post-shuffle filters
         return the first 10 elements of that range
         */
