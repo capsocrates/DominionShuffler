@@ -11,6 +11,8 @@
   ==============================================================================
 */
 
+#include "sm/utility_hash.hpp"
+
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/indexed.hpp>
 #include <boost/range/adaptor/indirected.hpp>
@@ -21,6 +23,7 @@
 #include <boost/range/sub_range.hpp>
 
 #include <functional>   //for std::bind
+#include <iterator>
 #include <unordered_map>
 #include <memory>
 #include <random>
@@ -60,14 +63,14 @@ public:
     auto shuffle(RangeT& in
                  , typename RangeT::size_type count) -> RangeT
     {
-        using diff_t = std::iterator_traits<typename RangeT::iterator>::difference_type;
-        using udiff_t = std::make_unsigned<diff_t>::type;
+        using diff_t = typename std::iterator_traits<typename RangeT::iterator>::difference_type;
+        using udiff_t = typename std::make_unsigned<diff_t>::type;
         using distr_t = std::uniform_int_distribution<udiff_t>;
-        using param_t = distr_t::param_type;
+        using param_t = typename distr_t::param_type;
 
         distr_t distr;
         using namespace std::placeholders;
-        auto gen{std::bind(
+        auto gen(std::bind(
                     [](udiff_t i
                       , distr_t& distr
                       , std::mt19937& gtor) -> udiff_t
@@ -76,26 +79,26 @@ public:
                       }
                     , _1
                     , std::ref(distr)
-                    , std::ref(generator))};
+                    , std::ref(generator)));
 
-        auto one_filter{[](const CardFilter& filter, const RandomizerCard& card) -> bool
+        auto one_filter([](const CardFilter& filter, const RandomizerCard& card) -> bool
         {
             //will return true if the card should be filtered out
             return !filter(card);
-        }};
+        });
 
         using namespace boost::adaptors;
-        auto all_filters{[&one_filter](const RandomizerCard& card
+        auto all_filters([&one_filter](const RandomizerCard& card
                                       , const vec_filterT& all_filters) -> bool
         {
-            auto bind_one_filter{std::bind(one_filter, _1, std::ref(card))};
+            auto bind_one_filter(std::bind(one_filter, _1, std::ref(card)));
             return boost::find_if(all_filters
                                   | indirected
                                   , bind_one_filter) == boost::end(all_filters
                                                                    | indirected);
-        }};
+        });
 
-        auto bind_all_filters{std::bind(all_filters, _1, std::ref(pre_filters))};
+        auto bind_all_filters(std::bind(all_filters, _1, std::ref(pre_filters)));
 
         /*
         generate a range of the filtered input
@@ -166,7 +169,7 @@ private:
     };
 
     template<typename KeyT>
-    using min_max_mapT = std::unordered_map<KeyT, min_max>;
+    using min_max_mapT = std::unordered_map<KeyT, min_max, utility::enum_hash<KeyT>>;
 
     min_max_mapT<Cardsets> sets_min_max;
     min_max_mapT<Cardtypes> types_min_max;
@@ -176,7 +179,7 @@ private:
     {
         assert(new_min >= default_min);
 
-        auto location_itr{min_max_map.find(in)};
+        auto location_itr(min_max_map.find(in));
         if (location_itr != std::end(min_max_map))
             location_itr->second.min = new_min;
         else
@@ -188,7 +191,7 @@ private:
     {
         assert(new_max <= default_max);
 
-        auto location_itr{min_max_map.find(in)};
+        auto location_itr(min_max_map.find(in));
         if (location_itr != std::end(min_max_map))
             location_itr->second.max = new_max;
         else
@@ -198,7 +201,7 @@ private:
     template<typename Type>
     inline auto getMin(const Type in, const min_max_mapT<Type>& min_max) const -> int
     {
-        auto location_itr{min_max.find(in)};
+        auto location_itr(min_max.find(in));
         if (location_itr != std::end(min_max))
             return location_itr->second.min;
         else
@@ -208,7 +211,7 @@ private:
     template<typename Type>
     inline auto getMax(const Type in, const min_max_mapT<Type>& min_max) const -> int
     {
-        auto location_itr{min_max.find(in)};
+        auto location_itr(min_max.find(in));
         if (location_itr != std::end(min_max))
             return location_itr->second.max;
         else

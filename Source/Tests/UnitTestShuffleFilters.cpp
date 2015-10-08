@@ -12,10 +12,12 @@
 
 #include "../Source/CardShuffler.hpp"
 
+#include "sm/utility_make_unique.hpp"
+
 namespace SM
 {
 auto ShuffleFiltersUnitTest::initialise() -> void
 {
-    shuf = std::make_unique<Dominion::CardShuffler>();
+    shuf = SM::utility::make_unique<Dominion::CardShuffler>();
 }
 }   //end namespace SM

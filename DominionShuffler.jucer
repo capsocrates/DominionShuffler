@@ -119,7 +119,7 @@
         <MODULEPATH id="juce_audio_processors" path="../../../tools\JUCE\modules"/>
       </MODULEPATHS>
     </XCODE_IPHONE>
-    <VS2015 targetFolder="Builds/VisualStudio2015">
+    <VS2015 targetFolder="Builds/VisualStudio2015" extraDefs="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="DominionShuffler" warningsAreErrors="1"
@@ -171,12 +171,14 @@
              androidSDKPath="" androidNDKPath="" androidMinimumSDK="21" androidInternetNeeded="0"
              androidKeyStore="${user.home}/.android/debug.keystore" androidKeyStorePass="android"
              androidKeyAlias="androiddebugkey" androidKeyAliasPass="android"
-             androidCpp11="0" extraCompilerFlags="-std=c++1y" extraDefs="MOBILE_DEVICE_IS_BEING_COMPILED=1">
+             androidCpp11="0" extraCompilerFlags="-std=c++1y" extraDefs="MOBILE_DEVICE_IS_BEING_COMPILED=1&#10;MAKE_UNIQUE_IS_NOT_DEFINED=1&#10;ENUM_CLASS_HASH_IS_NOT_DEFINED=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a" isDebug="1"
-                       optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"/>
+                       optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"
+                       defines=""/>
         <CONFIGURATION name="Release" androidArchitectures="armeabi armeabi-v7a" isDebug="0"
-                       optimisation="3" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"/>
+                       optimisation="3" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"
+                       defines=""/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../tools\JUCE\modules"/>

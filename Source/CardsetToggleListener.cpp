@@ -13,6 +13,8 @@
 #include "cardsets.hpp"
 #include "CardShuffler.hpp"
 
+#include "sm/utility_make_unique.hpp"
+
 #include <cassert>
 
 namespace SM
@@ -40,7 +42,7 @@ auto CardsetToggleListener::ListenImpl::getCardset() const -> Cardsets
 }
 
 CardsetToggleListener::CardsetToggleListener(const Cardsets set, CardShuffler& shuf)
-    : impl{std::make_unique<CardsetToggleListener::ListenImpl>(set, shuf)}
+    : impl{SM::utility::make_unique<CardsetToggleListener::ListenImpl>(set, shuf)}
 {
 }
 

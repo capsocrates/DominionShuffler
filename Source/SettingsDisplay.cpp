@@ -16,6 +16,8 @@
 #include "cardsets.hpp"
 #include "cardtypes.hpp"
 
+#include "sm/utility_make_unique.hpp"
+
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #include "boost/range/adaptor/indirected.hpp"
@@ -35,68 +37,88 @@ using vec_toggles = std::vector<toggle>;
 using vec_set = std::vector<CardsetToggleListener>;
 using vec_type = std::vector<CardtypeToggleListener>;
 
-using map_set_value = std::unordered_map<Cardsets, juce::Value>;
-using map_type_value = std::unordered_map<Cardtypes, juce::Value>;
+template<typename EnumT>
+using mapT = std::unordered_map < EnumT
+    , juce::Value
+    , utility::enum_hash < EnumT >> ;
+using map_set_value = mapT<Cardsets>;
+using map_type_value = mapT<Cardtypes>;
 using set_value_pair = map_set_value::value_type;
 using type_value_pair = map_type_value::value_type;
 
 auto make_set_toggle_values() -> map_set_value
 {
-    using namespace boost::adaptors;
-    return boost::copy_range<map_set_value>(filtered_cardset_vec()
-                                            | transformed([](const Cardsets in) -> set_value_pair
+    /*
+    Android compiler was complaining about
+    passing a lambda to boost::transformed
+    */
+    std::function<set_value_pair(Cardsets)> do_transform = [](const Cardsets in) -> set_value_pair
     {
         return std::make_pair(in, juce::Value(juce::var(false)));
-    }));
+    };
+    using namespace boost::adaptors;
+    return boost::copy_range<map_set_value>(filtered_cardset_vec() | transformed(do_transform));
 }
 
 auto make_type_toggle_values() -> map_type_value
 {
-    using namespace boost::adaptors;
-    return boost::copy_range<map_type_value>(filtered_cardtype_vec()
-                                             | transformed([](const Cardtypes in) -> type_value_pair
+    /*
+    Android compiler was complaining about
+    passing a lambda to boost::transformed
+    */
+    std::function<type_value_pair(Cardtypes)> do_transform = [](const Cardtypes in) -> type_value_pair
     {
         return std::make_pair(in, juce::Value(juce::var(false)));
-    }));
+    };
+    using namespace boost::adaptors;
+    return boost::copy_range<map_type_value>(filtered_cardtype_vec() | transformed(do_transform));
 }
 
 auto make_cardset_toggles(CardShuffler& shuf, map_set_value& values) -> vec_set
 {
-    using namespace boost::adaptors;
-    return boost::copy_range<vec_set>(filtered_cardset_vec()
-                                      | transformed([&shuf, &values](const Cardsets in) -> CardsetToggleListener
+    /*
+    Android compiler was complaining about
+    passing a lambda to boost::transformed
+    */
+    std::function<CardsetToggleListener(Cardsets)> do_transform = [&shuf, &values](const Cardsets in) -> CardsetToggleListener
     {
         CardsetToggleListener temp{in, shuf};
         values.at(in).addListener(temp.getListener());
         return temp;
-    }));
+    };
+    using namespace boost::adaptors;
+    return boost::copy_range<vec_set>(filtered_cardset_vec() | transformed(do_transform));
 }
 
 auto make_cardtype_toggles(CardShuffler& shuf, map_type_value& values) -> vec_type
 {
-    using namespace boost::adaptors;
-    return boost::copy_range<vec_type>(filtered_cardtype_vec()
-                                       | transformed([&shuf
-                                                     , &values](const Cardtypes in) -> CardtypeToggleListener
+    /*
+    Android compiler was complaining about
+    passing a lambda to boost::transformed
+    */
+    std::function<CardtypeToggleListener(Cardtypes)> do_transform = [&shuf
+        , &values](const Cardtypes in) -> CardtypeToggleListener
     {
         CardtypeToggleListener temp{in, shuf};
         values.at(in).addListener(temp.getListener());
         return temp;
-    }));
+    };
+    using namespace boost::adaptors;
+    return boost::copy_range<vec_type>(filtered_cardtype_vec() | transformed(do_transform));
 }
 
 auto make_toggle_buttons(const map_set_value& sets, const map_type_value& types) -> vec_toggles
 {
     auto setF = [](const set_value_pair& val) -> toggle
     {
-        return std::make_unique<juce::BooleanPropertyComponent>(
+        return SM::utility::make_unique<juce::BooleanPropertyComponent>(
             val.second
             , pretty_str_from_cardset(val.first).c_str()
             , "");
     };
     auto typeF = [](const type_value_pair& val) -> toggle
     {
-        return std::make_unique<juce::BooleanPropertyComponent>(
+        return SM::utility::make_unique<juce::BooleanPropertyComponent>(
             val.second
             , str_from_cardtype(val.first).c_str()
             , "");
@@ -122,8 +144,8 @@ SettingsDisplay::SettingsDisplay(CardShuffler& shuf)
     view.setViewedComponent(&subview, false);
     constexpr auto margin(int{5});
     constexpr auto height(int{25});
-    const auto width{view.getWidth() - view.getScrollBarThickness()};
-    auto& subviewRef{subview};
+    const auto width(view.getWidth() - view.getScrollBarThickness());
+    auto& subviewRef(subview);
     auto align_tops = [&subviewRef
         , width
         , height

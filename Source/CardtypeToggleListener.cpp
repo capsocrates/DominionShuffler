@@ -13,6 +13,8 @@
 #include "cardtypes.hpp"
 #include "CardShuffler.hpp"
 
+#include "sm/utility_make_unique.hpp"
+
 #include <cassert>
 
 namespace SM
@@ -40,7 +42,7 @@ auto CardtypeToggleListener::ListenImpl::getCardtype() const -> Cardtypes
 }
 
 CardtypeToggleListener::CardtypeToggleListener(const Cardtypes type, CardShuffler& shuf)
-    : impl{std::make_unique<CardtypeToggleListener::ListenImpl>(type, shuf)}
+    : impl{SM::utility::make_unique<CardtypeToggleListener::ListenImpl>(type, shuf)}
 {
 }
 
