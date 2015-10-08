@@ -14,8 +14,6 @@
 #include "Cardtypes.hpp"
 #include "RandomizerCard.hpp"
 
-#include "sm/utility_make_unique.hpp"
-
 #include "boost/range/algorithm/find.hpp"
 #include "boost/range/algorithm/find_if.hpp"
 
@@ -84,7 +82,7 @@ auto CardShuffler::disable(const Cardsets in) -> void
     //disabling a Cardset means adding a filter that will exclude it
     const CardsetFilter new_filter{in};
     if (!filterExistsAlready(new_filter))
-        pre_filters.emplace_back(SM::utility::make_unique<CardsetFilter>(new_filter));
+        addPreFilter(new_filter);
 }
 auto CardShuffler::isEnabled(const Cardsets in) const -> bool
 {
@@ -102,7 +100,7 @@ auto CardShuffler::disable(const Cardtypes in) -> void
     //disabling a Cardtype means adding a filter that will exclude it
     const CardtypeFilter new_filter{in};
     if (!filterExistsAlready(new_filter))
-        pre_filters.emplace_back(SM::utility::make_unique<CardtypeFilter>(new_filter));
+        addPreFilter(new_filter);
 }
 auto CardShuffler::isEnabled(const Cardtypes in) const -> bool
 {

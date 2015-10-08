@@ -12,6 +12,7 @@
 */
 
 #include "sm/utility_hash.hpp"
+#include "sm/utility_make_unique.hpp"
 
 #include <boost/range/adaptor/filtered.hpp>
 #include <boost/range/adaptor/indexed.hpp>
@@ -39,6 +40,13 @@ class RandomizerCard;
 
 class CardFilter    //an interface
 {
+/*
+Seriously considering rewriting this class
+to wrap all the polymorphism via templated
+private members. I don't like having to
+call make_unique all over the place when I
+add new filters.
+*/
 public:
     auto operator()(const RandomizerCard& in) const -> bool
     {
@@ -218,6 +226,11 @@ private:
             return default_max;
     }
 
+    template<typename FilterT>
+    auto addPreFilter(const FilterT& new_filter) -> void
+    {
+        pre_filters.emplace_back(utility::make_unique<FilterT>(new_filter));
+    }
     auto findFilter(const CardFilter& filter)->filter_itr;
     auto findFilter(const CardFilter& filter) const->filter_citr;
     auto filterExistsAlready(const CardFilter& filter) const -> bool;
