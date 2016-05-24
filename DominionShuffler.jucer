@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="XuXfHP" name="DominionShuffler" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.SuddenMagic.DominionShuffler" includeBinaryInAppConfig="1"
-              jucerVersion="3.2.0" companyName="SuddenMagic" companyEmail="joseph.michael.chadwick@gmail.com"
+              jucerVersion="4.2.0" companyName="SuddenMagic" companyEmail="joseph.michael.chadwick@gmail.com"
               defines="DONT_SET_USING_JUCE_NAMESPACE=1">
   <MAINGROUP id="hW9wfb" name="DominionShuffler">
     <GROUP id="{EDF4E494-DA76-89AD-941C-07CAF290E6AD}" name="UncExtLibs">
@@ -37,6 +37,10 @@
     </GROUP>
     <GROUP id="{56EB8080-E18D-A714-3ACE-2812849EFD6E}" name="Source">
       <GROUP id="{489BDC96-C21F-3614-2F81-8219FF9522F0}" name="Components">
+        <FILE id="B0tMbR" name="ToggleAndMinMax.cpp" compile="1" resource="0"
+              file="Source/ToggleAndMinMax.cpp"/>
+        <FILE id="DicsLM" name="ToggleAndMinMax.hpp" compile="0" resource="0"
+              file="Source/ToggleAndMinMax.hpp"/>
         <FILE id="r8lBcg" name="CardtypeToggleListener.cpp" compile="1" resource="0"
               file="Source/CardtypeToggleListener.cpp"/>
         <FILE id="lwuhDf" name="CardtypeToggleListener.hpp" compile="0" resource="0"
@@ -96,7 +100,7 @@
         <MODULEPATH id="juce_audio_processors" path="../../../tools\JUCE\modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <XCODE_IPHONE targetFolder="Builds/iOS">
+    <XCODE_IPHONE targetFolder="Builds/iOS" iosScreenOrientation="portraitlandscape">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" iosCompatibility="default" isDebug="1" optimisation="1"
                        targetName="DominionShuffler" cppLanguageStandard="c++14"/>
@@ -171,7 +175,8 @@
              androidSDKPath="" androidNDKPath="" androidMinimumSDK="21" androidInternetNeeded="0"
              androidKeyStore="${user.home}/.android/debug.keystore" androidKeyStorePass="android"
              androidKeyAlias="androiddebugkey" androidKeyAliasPass="android"
-             androidCpp11="0" extraCompilerFlags="-std=c++1y" extraDefs="MOBILE_DEVICE_IS_BEING_COMPILED=1&#10;MAKE_UNIQUE_IS_NOT_DEFINED=1&#10;ENUM_CLASS_HASH_IS_NOT_DEFINED=1">
+             androidCpp11="0" extraCompilerFlags="-std=c++1y" extraDefs="MOBILE_DEVICE_IS_BEING_COMPILED=1&#10;MAKE_UNIQUE_IS_NOT_DEFINED=1&#10;ENUM_CLASS_HASH_IS_NOT_DEFINED=1"
+             androidBluetoothNeeded="1" androidScreenOrientation="unspecified">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a" isDebug="1"
                        optimisation="1" targetName="DominionShuffler" headerPath="D:\dev\source\libs\boost_1_59_0;D:\dev\source\libs\GSL\include;D:\dev\source\libs\SuddenMagic"
@@ -236,4 +241,7 @@
     <MODULES id="juce_video" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
   <JUCEOPTIONS/>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
 </JUCERPROJECT>

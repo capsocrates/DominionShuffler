@@ -78,42 +78,36 @@ public:
 
         distr_t distr;
         using namespace std::placeholders;
-        auto gen(std::bind(
-                    [](udiff_t i
-                      , distr_t& distr
-                      , std::mt19937& gtor) -> udiff_t
-                      {
-                        return distr(gtor, param_t(0, i - 1));
-                      }
-                    , _1
-                    , std::ref(distr)
-                    , std::ref(generator)));
+        auto gen = [&distr, &generator](udiff_t i) -> udiff_t
+        {
+            return distr(generator, param_t{0, i - 1});
+        };
 
-        auto one_filter([](const CardFilter& filter, const RandomizerCard& card) -> bool
+        auto one_filter = [](const CardFilter& filter, const RandomizerCard& card) -> bool
         {
             //will return true if the card should be filtered out
             return !filter(card);
-        });
+        };
 
         using namespace boost::adaptors;
-        auto all_filters([&one_filter](const RandomizerCard& card
-                                      , const vec_filterT& all_filters) -> bool
+        auto all_filters = [&one_filter](const RandomizerCard& card
+                                         , const vec_filterT& all_filters) -> bool
         {
-            auto bind_one_filter(std::bind(one_filter, _1, std::ref(card)));
+            auto bind_one_filter = std::bind(one_filter, _1, std::ref(card));
             return boost::find_if(all_filters
                                   | indirected
                                   , bind_one_filter) == boost::end(all_filters
                                                                    | indirected);
-        });
+        };
 
-        auto bind_all_filters(std::bind(all_filters, _1, std::ref(pre_filters)));
+        auto bind_all_filters = std::bind(all_filters, _1, std::ref(pre_filters));
 
         /*
         generate a range of the filtered input
         shuffle that range
-        create two temporary ranges to store cards that satisfy our filter 
+        create two temporary ranges to store cards that satisfy our filter
             requirements and also cards that DON'T satisfy them.
-            These temporary ranges will record the order their elements were 
+            These temporary ranges will record the order their elements were
             added (via boost::adaptors::indexed) even if they are rearranged
         step over the return range and put all the elements that satisfy filter
             criteria into the first temporary range, and all the others into
@@ -123,8 +117,8 @@ public:
         if the requirements can not be satisfied by the entirety of the first temporary
             range, then no amount of re-ordering will suffice, and we must return
             with an unsatisfactory range
-        if the required elements are less than count, we can "truncate" past the 
-            last required element, and then iterate over the first and second 
+        if the required elements are less than count, we can "truncate" past the
+            last required element, and then iterate over the first and second
             temporary ranges, appending whichever element has a lower index until we
             reach count
         if the required elements are greater than count, we perform some magic
@@ -134,10 +128,141 @@ public:
         TODO: add post-shuffle filters
         return the first 10 elements of that range
         */
-        RangeT return_val(boost::copy_range<RangeT>(in | filtered(bind_all_filters)));
+        auto filtered_range = boost::copy_range<RangeT>(in | filtered(bind_all_filters));
         boost::random_shuffle(return_val, gen);
-        return boost::copy_range<RangeT>(return_val
-                                         | copied(0, std::min(count, return_val.size())));
+
+        auto sets_min_max_copy = sets_min_max;
+        auto types_min_max_copy = types_min_max;
+
+        auto dec_if_positive = [](int& val)
+        {
+            return val = std::max(val - 1, 0);
+        };
+
+        auto adjust_set_vals = [&sets_min_max_copy](const RandomizerCard& card)
+        {
+            if ((auto sets_itr = sets_min_max_copy.find(card.set))
+                != sets_min_max_copy.end())
+            {
+                dec_if_positive(sets_itr->second.max);
+                dec_if_positive(sets_itr->second.min);
+            }
+        };
+
+        auto adjust_type_vals = [&types_min_max_copy](const RandomizerCard& card)
+        {
+            for (Cardtypes type : card.applicable_types)
+            {
+                if ((auto types_itr = types_min_max_copy.find(type))
+                    != types_min_max_copy.end())
+                {
+                    dec_if_positive(types_itr->second.max);
+                    dec_if_positive(types_itr->second.max);
+                }
+            }
+        };
+
+        auto set_is_not_at_max = [&sets_min_max_copy](const RandomizerCard& card)
+        {
+            if ((auto sets_itr = sets_min_max_copy.find(card.set))
+                != sets_min_max_copy.end())
+            {
+                return sets_itr->second.max > 0;
+            }
+        };
+
+        auto type_is_not_at_max = [&types_min_max_copy](const RandomizerCard& card)
+        {
+            return boost::all_of(card.applicable_types,
+                                 [&](Cardtypes type)
+            {
+                if ((auto type_itr = types_min_max_copy.find(type))
+                    != types_min_max_copy.end())
+                {
+                    return type_itr->second.max > 0;
+                }
+            }
+            );
+        };
+
+        auto calculate_unfulfilled_requirements = [&]()
+        {
+            auto accumulate_function = [](int left, const min_max_mapT::value_type& value)
+            {
+                return left + value.second.max;
+            };
+            return boost::accumulate(sets_min_max_copy, 0, accumulate_function)
+                + boost::accumulate(types_min_max_copy, 0, accumulate_function);
+        };
+
+        auto return_val = RangeT{};
+        auto extra_cards = RangeT{};
+
+        auto room_for_extra_cards = [&return_val, count, calculate_unfulfilled_requirements]()
+        {
+            return return_val.size() < (count - calculate_unfulfilled_requirements());
+        };
+
+        auto add_card = [this
+            , &return_val
+            , adjust_set_vals
+            , adjust_type_vals](const RandomizerCard& card)
+        {
+            adjust_set_vals(card);
+            adjust_type_vals(card);
+            return_val.emplace_back(card);
+        };
+
+        for (const RandomizerCard& card : filtered_range)
+        {
+            if (return_val.size() <= count && not room_for_extra_cards())
+            {
+                break;
+            }
+            /*
+             *  if return_val.size() < (count - unfulfilled requirements) then add
+             *  the current card, but also modify the unfulfilled requirements based
+             *  on which ones the current card satisfies
+             *
+             *  otherwise, we don't have enough space (at present) for cards that don't
+             *  satisfy our requirements, so put them in a secondary buffer to pull from
+             *  if we satisfy the constraints later
+             */
+
+             //add the current card only if we haven't maxed out it's type or set already
+            if (set_is_not_at_max(card, sets_min_max_copy)
+                && type_is_not_at_max(card, types_min_max_copy))
+            {
+                if (room_for_extra_cards())
+                {
+                    if (extra_cards.size())
+                    {
+                        /*
+                         *  add any cards we skipped earlier because at the time there was
+                         *  no room for them
+                         */
+
+                        while (!extra_cards.empty()
+                               && room_for_extra_cards())
+                        {
+                            add_card(extra_cards.front());
+                            return_val.emplace_back(extra_cards.front());
+                            extra_cards.pop_front();
+                        }
+                    }
+                    if (room_for_extra_cards())
+                    {
+                        add_card(card);
+                    }s
+                }
+                else
+                {
+                    extra_cards.emplace_back(card);
+                }
+            }
+        }
+
+        return return_val;
     }
 
     auto enable(Cardsets) -> void;
@@ -166,8 +291,8 @@ private:
     using filter_itr = vec_filterT::iterator;
     using filter_citr = vec_filterT::const_iterator;
 
-    const static int default_min{0};
-    const static int default_max{10};
+    static constexpr int default_min{0};
+    static constexpr int default_max{10};
 
     struct min_max
     {
