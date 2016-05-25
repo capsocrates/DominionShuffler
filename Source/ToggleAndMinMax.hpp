@@ -20,13 +20,15 @@ template<typename EnumT>
 class ToggleAndMinMax : public juce::Component
 {
 public:
-    ToggleAndMinMax(EnumT);
-    ~ToggleAndMinMax();
+    ToggleAndMinMax(EnumT) {};
+    ~ToggleAndMinMax() {};
 
-    void paint (juce::Graphics&);
-    void resized();
+    auto paint (juce::Graphics&) -> void {};
+    auto resized() -> void {};
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ToggleAndMinMax)
 };
+
+#include "ToggleAndMinMax.tcc"
 
 #endif  // TOGGLEANDMINMAX_HPP_INCLUDED

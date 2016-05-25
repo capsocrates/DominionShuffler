@@ -23,11 +23,13 @@
 #include <boost/range/algorithm/random_shuffle.hpp>
 #include <boost/range/sub_range.hpp>
 
+#include <algorithm>
+#include <deque>
 #include <functional>   //for std::bind
 #include <iterator>
-#include <unordered_map>
 #include <memory>
 #include <random>
+#include <unordered_map>
 
 namespace SM
 {
@@ -64,6 +66,19 @@ private:
 
 class CardShuffler
 {
+private:
+    static constexpr int default_min{0};
+    static constexpr int default_max{10};
+
+    struct min_max
+    {
+        int min{default_min};
+        int max{default_max};
+        min_max(int min, int max) : min{min}, max{max} {};
+    };
+
+    template<typename KeyT>
+    using min_max_mapT = std::unordered_map<KeyT, min_max, utility::enum_hash<KeyT>>;
 public:
     CardShuffler();
 
@@ -78,9 +93,9 @@ public:
 
         distr_t distr;
         using namespace std::placeholders;
-        auto gen = [&distr, &generator](udiff_t i) -> udiff_t
+        auto gen = [&distr, this](udiff_t i) -> udiff_t
         {
-            return distr(generator, param_t{0, i - 1});
+            return distr(this->generator, param_t{0, i - 1});
         };
 
         auto one_filter = [](const CardFilter& filter, const RandomizerCard& card) -> bool
@@ -129,7 +144,7 @@ public:
         return the first 10 elements of that range
         */
         auto filtered_range = boost::copy_range<RangeT>(in | filtered(bind_all_filters));
-        boost::random_shuffle(return_val, gen);
+        boost::random_shuffle(filtered_range, gen);
 
         auto sets_min_max_copy = sets_min_max;
         auto types_min_max_copy = types_min_max;
@@ -139,22 +154,22 @@ public:
             return val = std::max(val - 1, 0);
         };
 
-        auto adjust_set_vals = [&sets_min_max_copy](const RandomizerCard& card)
+        auto adjust_set_vals = [&sets_min_max_copy, dec_if_positive](const RandomizerCard& card)
         {
-            if ((auto sets_itr = sets_min_max_copy.find(card.set))
-                != sets_min_max_copy.end())
+            auto sets_itr = sets_min_max_copy.find(card.set);
+            if (sets_itr != sets_min_max_copy.end())
             {
                 dec_if_positive(sets_itr->second.max);
                 dec_if_positive(sets_itr->second.min);
             }
         };
 
-        auto adjust_type_vals = [&types_min_max_copy](const RandomizerCard& card)
+        auto adjust_type_vals = [&types_min_max_copy, dec_if_positive](const RandomizerCard& card)
         {
             for (Cardtypes type : card.applicable_types)
             {
-                if ((auto types_itr = types_min_max_copy.find(type))
-                    != types_min_max_copy.end())
+                auto types_itr = types_min_max_copy.find(type);
+                if (types_itr != types_min_max_copy.end())
                 {
                     dec_if_positive(types_itr->second.max);
                     dec_if_positive(types_itr->second.max);
@@ -164,30 +179,33 @@ public:
 
         auto set_is_not_at_max = [&sets_min_max_copy](const RandomizerCard& card)
         {
-            if ((auto sets_itr = sets_min_max_copy.find(card.set))
-                != sets_min_max_copy.end())
+            auto sets_itr = sets_min_max_copy.find(card.set);
+            if (sets_itr != sets_min_max_copy.end())
             {
                 return sets_itr->second.max > 0;
             }
+            return true;
         };
 
         auto type_is_not_at_max = [&types_min_max_copy](const RandomizerCard& card)
         {
-            return boost::all_of(card.applicable_types,
-                                 [&](Cardtypes type)
+            return std::all_of(std::begin(card.applicable_types),
+                               std::end(card.applicable_types),
+                               [&](Cardtypes type)
             {
-                if ((auto type_itr = types_min_max_copy.find(type))
-                    != types_min_max_copy.end())
+                auto type_itr = types_min_max_copy.find(type);
+                if (type_itr != types_min_max_copy.end())
                 {
                     return type_itr->second.max > 0;
                 }
+                return true;
             }
             );
         };
 
-        auto calculate_unfulfilled_requirements = [&]()
+        auto calculate_unfulfilled_requirements = [&]() -> int
         {
-            auto accumulate_function = [](int left, const min_max_mapT::value_type& value)
+            auto accumulate_function = [](int left, const auto& value) -> int
             {
                 return left + value.second.max;
             };
@@ -196,7 +214,7 @@ public:
         };
 
         auto return_val = RangeT{};
-        auto extra_cards = RangeT{};
+        auto extra_cards = std::deque<typename RangeT::value_type>{};
 
         auto room_for_extra_cards = [&return_val, count, calculate_unfulfilled_requirements]()
         {
@@ -215,7 +233,7 @@ public:
 
         for (const RandomizerCard& card : filtered_range)
         {
-            if (return_val.size() <= count && not room_for_extra_cards())
+            if (return_val.size() <= count && !room_for_extra_cards())
             {
                 break;
             }
@@ -230,8 +248,8 @@ public:
              */
 
              //add the current card only if we haven't maxed out it's type or set already
-            if (set_is_not_at_max(card, sets_min_max_copy)
-                && type_is_not_at_max(card, types_min_max_copy))
+            if (set_is_not_at_max(card)
+                && type_is_not_at_max(card))
             {
                 if (room_for_extra_cards())
                 {
@@ -253,7 +271,7 @@ public:
                     if (room_for_extra_cards())
                     {
                         add_card(card);
-                    }s
+                    }
                 }
                 else
                 {
@@ -290,19 +308,6 @@ private:
     vec_filterT pre_filters;
     using filter_itr = vec_filterT::iterator;
     using filter_citr = vec_filterT::const_iterator;
-
-    static constexpr int default_min{0};
-    static constexpr int default_max{10};
-
-    struct min_max
-    {
-        int min{default_min};
-        int max{default_max};
-        min_max(int min, int max) : min{min}, max{max} {};
-    };
-
-    template<typename KeyT>
-    using min_max_mapT = std::unordered_map<KeyT, min_max, utility::enum_hash<KeyT>>;
 
     min_max_mapT<Cardsets> sets_min_max;
     min_max_mapT<Cardtypes> types_min_max;
