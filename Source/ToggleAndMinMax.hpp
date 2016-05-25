@@ -29,6 +29,4 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ToggleAndMinMax)
 };
 
-#include "ToggleAndMinMax.tcc"
-
 #endif  // TOGGLEANDMINMAX_HPP_INCLUDED
