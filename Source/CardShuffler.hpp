@@ -105,17 +105,12 @@ public:
         };
 
         using namespace boost::adaptors;
-        auto all_filters = [&one_filter](const RandomizerCard& card
-                                         , const vec_filterT& all_filters) -> bool
+        auto all_filters = [&one_filter, this](const RandomizerCard& card) -> bool
         {
             auto bind_one_filter = std::bind(one_filter, _1, std::ref(card));
-            return boost::find_if(all_filters
-                                  | indirected
-                                  , bind_one_filter) == boost::end(all_filters
-                                                                   | indirected);
+            auto all_filters_indirected = this->pre_filters | indirected;
+            return boost::find_if(all_filters_indirected, bind_one_filter) == std::end(all_filters_indirected);
         };
-
-        auto bind_all_filters = std::bind(all_filters, _1, std::ref(pre_filters));
 
         /*
         generate a range of the filtered input
@@ -143,7 +138,7 @@ public:
         TODO: add post-shuffle filters
         return the first 10 elements of that range
         */
-        auto filtered_range = boost::copy_range<RangeT>(in | filtered(bind_all_filters));
+        auto filtered_range = boost::copy_range<RangeT>(in | filtered(all_filters));
         boost::random_shuffle(filtered_range, gen);
 
         auto sets_min_max_copy = sets_min_max;

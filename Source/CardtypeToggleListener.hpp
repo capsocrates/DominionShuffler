@@ -27,7 +27,7 @@ class CardtypeToggleListener
     The method I use to create these listeners involves
     creating them in a function, then passing them to
     value->addListener() by pointer, then returning them
-    from the function, which invalidates their addres.
+    from the function, which invalidates their address.
     So I stored the listener as a pointer inside this class,
     so this class can be passed around without invalidating the
     address of the listener. This also means I can move

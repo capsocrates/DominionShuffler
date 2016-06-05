@@ -11,7 +11,11 @@
   ==============================================================================
 */
 
+
+#include "cardsets.hpp"
+#include "cardtypes.hpp"
 #include "sm/utility_hash.hpp"
+#include "ToggleAndMinMax.hpp"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -42,9 +46,11 @@ private:
     juce::Viewport view;
     juce::Component subview;
     template<typename EnumT>
-    using mapT = std::unordered_map<EnumT
+    using mapT = std::unordered_map<
+        EnumT
         , juce::Value
-        , utility::enum_hash<EnumT>>;
+        , utility::enum_hash<EnumT>
+    >;
     mapT<Cardsets> setToggleValues;
     mapT<Cardtypes> typeToggleValues;
     std::vector<CardsetToggleListener> setToggleListeners;
@@ -52,6 +58,8 @@ private:
     std::vector<std::unique_ptr<juce::BooleanPropertyComponent>> toggles;
     //std::vector<std::unique_ptr<CardsetToggle>> cardset_toggles;
     //std::vector<std::unique_ptr<CardtypeToggle>> cardtype_toggles;
+
+    std::vector<std::unique_ptr<ToggleAndMinMax<Cardsets>>> cardsets;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SettingsDisplay)
 };

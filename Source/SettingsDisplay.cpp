@@ -13,9 +13,6 @@
 #include "CardsetToggleListener.hpp"
 #include "CardtypeToggleListener.hpp"
 
-#include "cardsets.hpp"
-#include "cardtypes.hpp"
-
 #include "sm/utility_make_unique.hpp"
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -129,6 +126,21 @@ auto make_toggle_buttons(const map_set_value& sets, const map_type_value& types)
     return return_vec;
 }
 
+template<typename EnumT>
+using toggler = ToggleAndMinMax<EnumT>;
+using cardset_toggle = std::unique_ptr<toggler<Cardsets>>;
+using cardset_toggle_vec = std::vector<cardset_toggle>;
+
+auto make_toggle_min_max_cardsets() -> cardset_toggle_vec
+{
+    std::function<cardset_toggle(Cardsets)> do_transform = [](const Cardsets in) -> cardset_toggle
+    {
+        return SM::utility::make_unique<toggler<Cardsets>>(in);
+    };
+    using namespace boost::adaptors;
+    return boost::copy_range<cardset_toggle_vec>(filtered_cardset_vec() | transformed(do_transform));
+}
+
 //==============================================================================
 SettingsDisplay::SettingsDisplay(CardShuffler& shuf)
     : view(L"SettingsView")
@@ -138,6 +150,7 @@ SettingsDisplay::SettingsDisplay(CardShuffler& shuf)
     , setToggleListeners(make_cardset_toggles(shuf, setToggleValues))
     , typeToggleListeners(make_cardtype_toggles(shuf, typeToggleValues))
     , toggles(make_toggle_buttons(setToggleValues, typeToggleValues))
+    , cardsets(make_toggle_min_max_cardsets())
 {
     addAndMakeVisible(view);
     view.centreWithSize(getWidth(), getHeight());
@@ -146,24 +159,43 @@ SettingsDisplay::SettingsDisplay(CardShuffler& shuf)
     constexpr auto height(int{25});
     const auto width(view.getWidth() - view.getScrollBarThickness());
     auto& subviewRef(subview);
+
     auto align_tops = [&subviewRef
         , width
         , height
         , margin](const int top
-                  , juce::BooleanPropertyComponent& next) -> int
+                  , ToggleAndMinMax<Cardsets>& next) -> int
     {
         subviewRef.addAndMakeVisible(&next);
         next.centreWithSize(width, height);
         next.setTopLeftPosition(margin, top);
-        next.setState(true);
+        //next.setState(true);
         return next.getBottom() + margin;
     };
     using namespace boost::adaptors;
     subview.centreWithSize(width,
-                           boost::accumulate(toggles
-                                             | indirected
+                           boost::accumulate(cardsets | indirected
                                              , margin
                                              , align_tops));
+
+    //auto align_tops = [&subviewRef
+    //    , width
+    //    , height
+    //    , margin](const int top
+    //              , juce::BooleanPropertyComponent& next) -> int
+    //{
+    //    subviewRef.addAndMakeVisible(&next);
+    //    next.centreWithSize(width, height);
+    //    next.setTopLeftPosition(margin, top);
+    //    next.setState(true);
+    //    return next.getBottom() + margin;
+    //};
+    //using namespace boost::adaptors;
+    //subview.centreWithSize(width,
+    //                       boost::accumulate(toggles
+    //                                         | indirected
+    //                                         , margin
+    //                                         , align_tops));
 }
 
 SettingsDisplay::~SettingsDisplay()
@@ -198,7 +230,7 @@ void SettingsDisplay::resized()
     subview.centreWithSize(view.getWidth() - view.getScrollBarThickness(), subview.getHeight());
     subview.setTopLeftPosition(0, 0);
 
-    for (auto& in : toggles)
+    for (auto& in : cardsets)
     {
         auto margin(int{in->getX()});
         auto top(int{in->getY()});

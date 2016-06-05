@@ -178,7 +178,11 @@ inline auto str_from_cardset(const Cardsets in) -> std::wstring
         assert(!"reached invalid if statement in cardset to string conversion");
         return L"base";
     }
+}
 
+inline auto to_string(const SM::Dominion::Cardsets in)->std::wstring
+{
+    return SM::Dominion::str_from_cardset(in);
 }
 
 }	//end namespace Dominion
